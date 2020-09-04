@@ -24,7 +24,7 @@ namespace Test
 
             var extensoOptions = new ExtensoOptions
             {
-                Conector = "Vírugla",
+                Conector = "Vírgula",
                 Tipo = ExtensoOptions.TipoNumerais.Cardinais,
                 ZeroExplicitoDepoisDaVirgula = true,
                 // Configure aqui o resto das opções
@@ -33,7 +33,7 @@ namespace Test
             var extenso = new Extenso(extensoOptions);
             var numeroPorExtenso = extenso.EscreverNumero(meuNumero.ToString());
             Console.WriteLine(numeroPorExtenso);
-            //Vinte E Cinco Vírugla Três
+            //Vinte E Cinco Vírgula Três
         }
     }
 }
