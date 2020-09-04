@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Felipe de Camargo</Authors>
+    <Description>Software que escreve os numerais da língua portuguesa por extenso.</Description>
+    <PackageId>NumerosExtensos</PackageId>
+  </PropertyGroup>
+
+</Project>
