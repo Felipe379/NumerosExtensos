@@ -33,7 +33,7 @@ namespace Test
             var extenso = new Extenso(extensoOptions);
             var numeroPorExtenso = extenso.EscreverNumero(meuNumero.ToString());
             Console.WriteLine(numeroPorExtenso);
-            //Vinte E Cinco Vírgula Três
+            //Vinte E Cinco Vírgula Zero Três
         }
     }
 }
