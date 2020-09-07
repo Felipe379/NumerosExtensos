@@ -7,6 +7,7 @@
         Ordinal,
         MonetarioBRL,
         Porcentagem,
+        Metro,
         Romanos
     };
 }

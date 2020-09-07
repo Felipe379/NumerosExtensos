@@ -2,9 +2,9 @@
 
 namespace NumerosExtensos.Tipos.Ordinal
 {
-    public class Nomenclatura
+    internal class Nomenclatura
     {
-        internal static readonly Dictionary<int?, string> Numeros = new Dictionary<int?, string>()
+        internal static readonly Dictionary<int, string> Numeros = new Dictionary<int, string>()
         {
             { 0, "Neutr" },
             { 1, "Primeir"},
@@ -36,7 +36,7 @@ namespace NumerosExtensos.Tipos.Ordinal
             { 900, "Nonigentésim" },
         };
 
-        internal static readonly Dictionary<int?, string> NomenclaturaClasses = new Dictionary<int?, string>()
+        internal static readonly Dictionary<int, string> NomenclaturaClasses = new Dictionary<int, string>()
         {
             { 0, "" },
             { 1, "Milésim" },

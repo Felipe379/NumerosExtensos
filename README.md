@@ -2,7 +2,7 @@
  Pacote que permite escrever os numerais da língua portuguesa por extenso.
 
 ## Introdução
-Para começar instale o pacote [Nuget](https://www.nuget.org/packages/NumerosExtensos/1.0.0).
+Para começar instale o pacote [Nuget](https://www.nuget.org/packages/NumerosExtensos/).
 
 Atualmente o pacote suporta os números:
 * Cardinais: Suporta até a casa do vigintilhões.
@@ -38,7 +38,7 @@ namespace Test
             var extenso = new Extenso(extensoOptions);
             var numeroPorExtenso = extenso.EscreverNumero(meuNumero.ToString());
             Console.WriteLine(numeroPorExtenso);
-            //Vinte E Cinco Vírgula Zero Três
+            // Vinte E Cinco Vírgula Zero Três
         }
     }
 }
@@ -57,7 +57,7 @@ Para facilitar uso, também é possível escolher algumas configurações já pr
             var extenso = new Extenso(PresetOptions.Presets[Preset.MonetarioBRL]);
             var numeroPorExtenso = extenso.EscreverNumero(meuNumero.ToString());
             Console.WriteLine(numeroPorExtenso);
-            //Vinte E Cinco Reais E Três Centavos
+            // Vinte E Cinco Reais E Três Centavos
         }
     }
   

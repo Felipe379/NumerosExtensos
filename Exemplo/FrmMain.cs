@@ -17,6 +17,7 @@ namespace Exemplo
             cbo_Presets.Items.Add("Número Romano");
             cbo_Presets.Items.Add("Real");
             cbo_Presets.Items.Add("Porcentagem");
+            cbo_Presets.Items.Add("Metro");
 
             cbo_Presets.SelectedIndex = 0;
         }
@@ -42,7 +43,7 @@ namespace Exemplo
             extensoOptions.AntesDaVirgulaPlural = textInfo.ToTitleCase(extensoOptions.AntesDaVirgulaPlural);
             extensoOptions.DepoisDaVirgulaSingular = textInfo.ToTitleCase(extensoOptions.DepoisDaVirgulaSingular);
             extensoOptions.DepoisDaVirgulaPlural = textInfo.ToTitleCase(extensoOptions.DepoisDaVirgulaPlural);
-            extensoOptions.Conector = textInfo.ToTitleCase(extensoOptions?.Conector);
+            extensoOptions.Conector = textInfo.ToTitleCase(extensoOptions.Conector);
 
             try
             {
@@ -71,9 +72,12 @@ namespace Exemplo
         {
             var tipoPreset = ObtemTipoPreset(cbo_Presets.SelectedIndex);
 
-            rdb_Cardinal.Checked = PresetOptions.Presets[tipoPreset].Tipo == ExtensoOptions.TipoNumerais.Cardinais ? true : false;
-            rdb_Ordinal.Checked = PresetOptions.Presets[tipoPreset].Tipo == ExtensoOptions.TipoNumerais.Ordinais ? true : false;
-            rdb_Romano.Checked = PresetOptions.Presets[tipoPreset].Tipo == ExtensoOptions.TipoNumerais.Romanos ? true : false;
+            if (PresetOptions.Presets[tipoPreset].Tipo == TipoNumerais.Cardinais)
+                rdb_Cardinal.Checked = true;
+            else if (PresetOptions.Presets[tipoPreset].Tipo == TipoNumerais.Ordinais)
+                rdb_Ordinal.Checked = true;
+            else if (PresetOptions.Presets[tipoPreset].Tipo == TipoNumerais.Romanos)
+                rdb_Romano.Checked = true;
 
             chk_ExtensoEmFeminino.Checked = PresetOptions.Presets[tipoPreset].DeveUsarExtensoFeminino;
             chk_ZeroExplicitoAntesDaVirgula.Checked = PresetOptions.Presets[tipoPreset].ZeroExplicitoAntesDaVirgula;
@@ -100,6 +104,8 @@ namespace Exemplo
                     return Preset.MonetarioBRL;
                 case 5:
                     return Preset.Porcentagem;
+                case 6:
+                    return Preset.Metro;
                 default:
                     return Preset.Nenhum;
             }
@@ -120,7 +126,7 @@ namespace Exemplo
             ObtemTipoNumeral();
         }
 
-        private ExtensoOptions.TipoNumerais ObtemTipoNumeral()
+        private TipoNumerais ObtemTipoNumeral()
         {
             if (rdb_Ordinal.Checked)
             {
@@ -133,7 +139,7 @@ namespace Exemplo
                 txt_AntesDaVirgulaPlural.Enabled = false;
                 txt_DepoisDaVirgulaSingular.Enabled = true;
                 txt_DepoisDaVirgulaPlural.Enabled = true;
-                return ExtensoOptions.TipoNumerais.Ordinais;
+                return TipoNumerais.Ordinais;
             }
             else if (rdb_Cardinal.Checked)
             {
@@ -146,7 +152,7 @@ namespace Exemplo
                 txt_AntesDaVirgulaPlural.Enabled = true;
                 txt_DepoisDaVirgulaSingular.Enabled = true;
                 txt_DepoisDaVirgulaPlural.Enabled = true;
-                return ExtensoOptions.TipoNumerais.Cardinais;
+                return TipoNumerais.Cardinais;
             }
             else
             {
@@ -159,7 +165,7 @@ namespace Exemplo
                 txt_AntesDaVirgulaPlural.Enabled = false;
                 txt_DepoisDaVirgulaSingular.Enabled = false;
                 txt_DepoisDaVirgulaPlural.Enabled = false;
-                return ExtensoOptions.TipoNumerais.Romanos;
+                return TipoNumerais.Romanos;
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NumerosExtensos.Enums;
+using System;
 
 namespace NumerosExtensos
 {
@@ -14,17 +15,17 @@ namespace NumerosExtensos
         {
             switch (_extenso.Tipo)
             {
-                case ExtensoOptions.TipoNumerais.Cardinais:
+                case TipoNumerais.Cardinais:
                     return Tipos.Cardinal.Escrever.Numero(numero, _extenso);
-                case ExtensoOptions.TipoNumerais.Ordinais:
+                case TipoNumerais.Ordinais:
                     return Tipos.Ordinal.Escrever.Numero(numero, _extenso);
-                case ExtensoOptions.TipoNumerais.Multiplicativos:
+                case TipoNumerais.Multiplicativos:
                     throw new NotSupportedException();
-                case ExtensoOptions.TipoNumerais.Fracionarios:
+                case TipoNumerais.Fracionarios:
                     throw new NotSupportedException();
-                case ExtensoOptions.TipoNumerais.Coletivos:
+                case TipoNumerais.Coletivos:
                     throw new NotSupportedException();
-                case ExtensoOptions.TipoNumerais.Romanos:
+                case TipoNumerais.Romanos:
                     return Tipos.Romano.Escrever.Numero(numero);
                 default:
                     throw new NotSupportedException();

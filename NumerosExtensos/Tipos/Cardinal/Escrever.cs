@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace NumerosExtensos.Tipos.Cardinal
 {
-    public class Escrever
+    internal static class Escrever
     {
         public static string Numero(string numero, ExtensoOptions extenso)
         {
@@ -29,18 +30,30 @@ namespace NumerosExtensos.Tipos.Cardinal
 
             var numeroEscrito = string.IsNullOrWhiteSpace(sinal) ? string.Empty : sinal == "-" ? " Menos " : " Mais ";
 
-            var antesDaVirgula = EscreveValor(numeroAntesDaVirgula, extenso.ZeroExplicitoAntesDaVirgula, extenso.DeveUsarPrefixoDe, extenso.DeveUsarExtensoFeminino);
-            var depoisDaVirgula = EscreveValor(numeroDepoisDaVirgula, extenso.ZeroExplicitoDepoisDaVirgula, extenso.DeveUsarPrefixoDe, extenso.DeveUsarExtensoFeminino);
-
             var antesDaVirgulaSingular = Helpers.NumeroSingular(numeroAntesDaVirgula);
             var depoisDaVirgulaSingular = Helpers.NumeroSingular(numeroDepoisDaVirgula);
 
-            numeroEscrito += $" {antesDaVirgula} " + (antesDaVirgulaSingular ? $" {extenso.AntesDaVirgulaSingular} " : $" {extenso.AntesDaVirgulaPlural} ");
+            if (!string.IsNullOrWhiteSpace(numeroAntesDaVirgula))
+            {
+                var antesDaVirgula = EscreveValor(numeroAntesDaVirgula, extenso.ZeroExplicitoAntesDaVirgula, extenso.DeveUsarPrefixoDe, extenso.DeveUsarExtensoFeminino);
+                numeroEscrito += $" {antesDaVirgula} " + (antesDaVirgulaSingular ? $" {extenso.AntesDaVirgulaSingular} " : $" {extenso.AntesDaVirgulaPlural} ");
+            }
 
             if (!string.IsNullOrWhiteSpace(virgula))
-                numeroEscrito += $" {extenso.Conector} {depoisDaVirgula} " + (depoisDaVirgulaSingular ? $" {extenso.DepoisDaVirgulaSingular} " : $" {extenso.DepoisDaVirgulaPlural} ");
-            else if (string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaSingular) || string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaPlural))
-                numeroEscrito += depoisDaVirgulaSingular ? $" {extenso.DepoisDaVirgulaSingular} " : $" {extenso.DepoisDaVirgulaPlural} ";
+                numeroEscrito += $" {extenso.Conector} ";
+
+            if (!string.IsNullOrWhiteSpace(numeroDepoisDaVirgula))
+            {
+                var depoisDaVirgula = EscreveValor(numeroDepoisDaVirgula, extenso.ZeroExplicitoDepoisDaVirgula, extenso.DeveUsarPrefixoDe, extenso.DeveUsarExtensoFeminino);
+                if (string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaSingular) && string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaPlural))
+                    numeroEscrito += $" {depoisDaVirgula} " + (antesDaVirgulaSingular ? $" {extenso.DepoisDaVirgulaSingular} " : $" {extenso.DepoisDaVirgulaPlural} ");
+                else
+                    numeroEscrito += $" {depoisDaVirgula} " + (depoisDaVirgulaSingular ? $" {extenso.DepoisDaVirgulaSingular} " : $" {extenso.DepoisDaVirgulaPlural} ");
+            }
+            else if (string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaSingular) && string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaPlural))
+            {
+                numeroEscrito += antesDaVirgulaSingular ? $" {extenso.DepoisDaVirgulaSingular} " : $" {extenso.DepoisDaVirgulaPlural} ";
+            }
 
             return Helpers.RemoveEspacosEmBranco(numeroEscrito);
         }
@@ -54,7 +67,7 @@ namespace NumerosExtensos.Tipos.Cardinal
                 var index = 0;
 
                 for (; index < numero.Length && numero[index] == '0'; index++)
-                    numeroEscrito += EscrevePorExtenso(0, false);
+                    numeroEscrito += EscrevePorExtenso(0, Nomenclatura.NumerosMasculino);
 
                 numero = numero.Substring(index);
             }
@@ -62,10 +75,7 @@ namespace NumerosExtensos.Tipos.Cardinal
             while (numero.Count() % 3 != 0)
                 numero = numero.Insert(0, "0");
 
-            var arrayDeNumeros = Regex.Replace(numero, ".{3}", "$0,")
-                                      .Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                                      .Reverse()
-                                      .ToArray();
+            var arrayDeNumeros = Helpers.ObtemArrayNumerico(numero);
 
             var quantidadeDeCasas = arrayDeNumeros.Count();
 
@@ -74,7 +84,7 @@ namespace NumerosExtensos.Tipos.Cardinal
                 var valor = int.Parse(arrayDeNumeros[i]);
                 if (valor != 0 || (quantidadeDeCasas == 1 && !zeroExplicito))
                 {
-                    numeroEscrito += (extensoFeminino && i < 2) ? EscrevePorExtenso(valor, true) : EscrevePorExtenso(valor, false);
+                    numeroEscrito += (extensoFeminino && i < 2) ? EscrevePorExtenso(valor, Nomenclatura.NumerosFeminino) : EscrevePorExtenso(valor, Nomenclatura.NumerosMasculino);
                     numeroEscrito += i < 2 ? $" {Nomenclatura.Classes[i]} " : valor == 1 ? $" {Nomenclatura.Classes[i]}ão " : $" {Nomenclatura.Classes[i]}ões ";
                     numeroEscrito += " E ";
                 }
@@ -89,14 +99,13 @@ namespace NumerosExtensos.Tipos.Cardinal
             return numeroEscrito;
         }
 
-        private static string EscrevePorExtenso(int? valor, bool extensoFeminino)
+        private static string EscrevePorExtenso(int valor, Dictionary<int, string> valorPorExtenso)
         {
             var unidadePorExtenso = string.Empty;
-            var ordemNumerica = Helpers.ObterOrdemNumerica(valor);
-            var valorUnidade = ordemNumerica[0];
-            var valorDezena = ordemNumerica[1];
-            var valorCentena = ordemNumerica[2];
-            var valorPorExtenso = extensoFeminino ? Nomenclatura.NumerosFeminino : Nomenclatura.NumerosMasculino;
+            var ordensNumericas = Helpers.ObterOrdemNumerica(valor);
+            var valorUnidade = ordensNumericas[0];
+            var valorDezena = ordensNumericas[1];
+            var valorCentena = ordensNumericas[2];
 
             if (valorCentena > 0)
             {

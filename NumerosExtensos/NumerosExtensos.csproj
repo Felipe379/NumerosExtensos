@@ -3,16 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Felipe de Camargo</Authors>
-    <Description>Pacote que permite escrever os numerais da língua portuguesa por extenso.</Description>
+    <Description>Pacote que permite escrever os numerais da língua portuguesa (PT-BR) por extenso.</Description>
     <PackageId>NumerosExtensos</PackageId>
     <Copyright>Copyright © 2020 Felipe de Camargo</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/Felipe379/NumerosExtensos/</RepositoryUrl>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>V1.0.1
-- Correção para a escrita dos cardinais para caso não exista uma vírgula ou ponto e ainda assim o regex interprete números como se fossem depois da vírgula;
-V1.0.0
-- Versão inicial</PackageReleaseNotes>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>V1.0.2
+- Melhorias gerais no código;
+- Reescreve o código de Escrever.Numero() do Cardinal;
+- Adiciona configuração predefinida "Metro";</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
