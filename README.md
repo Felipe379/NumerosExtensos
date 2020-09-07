@@ -4,6 +4,11 @@
 ## Introdução
 Para começar instale o pacote [Nuget](https://www.nuget.org/packages/NumerosExtensos/1.0.0).
 
+Atualmente o pacote suporta os números:
+* Cardinais: Suporta até a casa do vigintilhões.
+* Ordinais: Suporta até a casa do vigintilionésimo.
+* Romanos: Suporta até 3999.
+
 ## Uso
 
 Para um exemplo complexo, veja o projeto "Exemplo", que contém um Form básico utilizando o pacote.
