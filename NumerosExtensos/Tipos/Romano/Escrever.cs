@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace NumerosExtensos.Tipos.Romano
 {
-    public class Escrever
+    internal class Escrever
     {
         public static string Numero(string numero)
         {
@@ -23,22 +24,18 @@ namespace NumerosExtensos.Tipos.Romano
         {
             int valor = int.Parse(numero);
 
-            var ordemNumerica = Helpers.ObterOrdemNumerica(valor);
-            var valorUnidade = ordemNumerica[0];
-            var valorDezena = ordemNumerica[1];
-            var valorCentena = ordemNumerica[2];
-            var valorMilhares = ordemNumerica[3];
-
+            var ordensNumericas = Helpers.ObterOrdemNumerica(valor);
             var numeroRomano = string.Empty;
-            numeroRomano += ObtemNumeraisRomanos(valorMilhares);
-            numeroRomano += ObtemNumeraisRomanos(valorCentena);
-            numeroRomano += ObtemNumeraisRomanos(valorDezena);
-            numeroRomano += ObtemNumeraisRomanos(valorUnidade);
+
+            foreach (var ordemNumerica in ordensNumericas.Reverse())
+            {
+                numeroRomano += ObtemNumeraisRomanos(ordemNumerica);
+            }
 
             return numeroRomano;
         }
 
-        private static string ObtemNumeraisRomanos(int? value)
+        private static string ObtemNumeraisRomanos(int value)
         {
             var multiplier = 1;
             while (value >= 10)

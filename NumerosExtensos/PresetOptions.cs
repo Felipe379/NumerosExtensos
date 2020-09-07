@@ -23,7 +23,7 @@ namespace NumerosExtensos
             },
             { Preset.Cardinal, new ExtensoOptions
                 {
-                    Tipo = ExtensoOptions.TipoNumerais.Cardinais,
+                    Tipo = TipoNumerais.Cardinais,
                     DeveUsarExtensoFeminino = false,
                     ZeroExplicitoAntesDaVirgula = false,
                     ZeroExplicitoDepoisDaVirgula = true,
@@ -37,13 +37,13 @@ namespace NumerosExtensos
             },
             { Preset.Ordinal, new ExtensoOptions
                 {
-                    Tipo = ExtensoOptions.TipoNumerais.Ordinais,
+                    Tipo = TipoNumerais.Ordinais,
                     DeveUsarExtensoFeminino = false,
                 }
             },
             { Preset.MonetarioBRL, new ExtensoOptions
                 {
-                    Tipo = ExtensoOptions.TipoNumerais.Cardinais,
+                    Tipo = TipoNumerais.Cardinais,
                     DeveUsarExtensoFeminino = false,
                     ZeroExplicitoAntesDaVirgula = false,
                     ZeroExplicitoDepoisDaVirgula = false,
@@ -57,7 +57,7 @@ namespace NumerosExtensos
             },
             { Preset.Porcentagem, new ExtensoOptions
                 {
-                    Tipo = ExtensoOptions.TipoNumerais.Cardinais,
+                    Tipo = TipoNumerais.Cardinais,
                     DeveUsarExtensoFeminino = false,
                     ZeroExplicitoAntesDaVirgula = false,
                     ZeroExplicitoDepoisDaVirgula = true,
@@ -71,7 +71,7 @@ namespace NumerosExtensos
             },
             { Preset.Romanos, new ExtensoOptions
                 {
-                    Tipo = ExtensoOptions.TipoNumerais.Romanos,
+                    Tipo = TipoNumerais.Romanos,
                     DeveUsarExtensoFeminino = false,
                     ZeroExplicitoAntesDaVirgula = false,
                     ZeroExplicitoDepoisDaVirgula = false,
@@ -81,6 +81,20 @@ namespace NumerosExtensos
                     Conector = "",
                     DepoisDaVirgulaSingular = "",
                     DepoisDaVirgulaPlural = "",
+                }
+            },
+            { Preset.Metro, new ExtensoOptions
+                {
+                    Tipo = TipoNumerais.Cardinais,
+                    DeveUsarExtensoFeminino = false,
+                    ZeroExplicitoAntesDaVirgula = false,
+                    ZeroExplicitoDepoisDaVirgula = true,
+                    DeveUsarPrefixoDe = false,
+                    AntesDaVirgulaSingular = "",
+                    AntesDaVirgulaPlural= "",
+                    Conector = "Vírgula",
+                    DepoisDaVirgulaSingular = "Metro",
+                    DepoisDaVirgulaPlural = "Metros",
                 }
             }
         };

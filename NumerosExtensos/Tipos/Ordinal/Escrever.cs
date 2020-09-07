@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace NumerosExtensos.Tipos.Ordinal
 {
-    public class Escrever
+    internal class Escrever
     {
         public static string Numero(string numero, ExtensoOptions extenso)
         {
@@ -30,10 +30,7 @@ namespace NumerosExtensos.Tipos.Ordinal
             while (numero.Count() % 3 != 0)
                 numero = numero.Insert(0, "0");
 
-            var arrayDeNumeros = Regex.Replace(numero, ".{3}", "$0,")
-                                      .Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                                      .Reverse()
-                                      .ToArray();
+            var arrayDeNumeros = Helpers.ObtemArrayNumerico(numero);
 
             var quantidadeDeCasas = arrayDeNumeros.Count();
             var genero = extensoFeminino ? "a" : "o";
@@ -51,13 +48,13 @@ namespace NumerosExtensos.Tipos.Ordinal
             return numeroEscrito;
         }
 
-        private static string EscrevePorExtenso(int? valor, string genero)
+        private static string EscrevePorExtenso(int valor, string genero)
         {
             var unidadePorExtenso = string.Empty;
-            var ordemNumerica = Helpers.ObterOrdemNumerica(valor);
-            var valorUnidade = ordemNumerica[0];
-            var valorDezena = ordemNumerica[1];
-            var valorCentena = ordemNumerica[2];
+            var ordensNumericas = Helpers.ObterOrdemNumerica(valor);
+            var valorUnidade = ordensNumericas[0];
+            var valorDezena = ordensNumericas[1];
+            var valorCentena = ordensNumericas[2];
 
             if (valorCentena > 0)
             {
