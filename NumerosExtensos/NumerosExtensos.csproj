@@ -8,6 +8,11 @@
     <Copyright>Copyright © 2020 Felipe de Camargo</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/Felipe379/NumerosExtensos/</RepositoryUrl>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>V1.0.1
+- Correção para a escrita dos cardinais para caso não exista uma vírgula ou ponto e ainda assim o regex interprete números como se fossem depois da vírgula;
+V1.0.0
+- Versão inicial</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

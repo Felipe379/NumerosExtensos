@@ -24,6 +24,9 @@ namespace NumerosExtensos.Tipos.Cardinal
             var numeroAntesDaVirgula = token.Groups["numeroAntesDaVirgula"].ToString();
             var numeroDepoisDaVirgula = token.Groups["numeroDepoisDaVirgula"].ToString();
 
+            if (string.IsNullOrWhiteSpace(virgula) && !string.IsNullOrWhiteSpace(numeroDepoisDaVirgula))
+                throw new FormatException();
+
             var numeroEscrito = string.IsNullOrWhiteSpace(sinal) ? string.Empty : sinal == "-" ? " Menos " : " Mais ";
 
             var antesDaVirgula = EscreveValor(numeroAntesDaVirgula, extenso.ZeroExplicitoAntesDaVirgula, extenso.DeveUsarPrefixoDe, extenso.DeveUsarExtensoFeminino);
