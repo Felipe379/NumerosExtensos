@@ -1,4 +1,5 @@
 ﻿using NumerosExtensos.Enums;
+using NumerosExtensos.Options;
 using System;
 
 namespace NumerosExtensos
@@ -16,9 +17,9 @@ namespace NumerosExtensos
             switch (_extenso.Tipo)
             {
                 case TipoNumerais.Cardinais:
-                    return Tipos.Cardinal.Escrever.Numero(numero, _extenso);
+                    return Tipos.Cardinal.Escrever.Numero(numero, _extenso.CardinaisOptions);
                 case TipoNumerais.Ordinais:
-                    return Tipos.Ordinal.Escrever.Numero(numero, _extenso);
+                    return Tipos.Ordinal.Escrever.Numero(numero, _extenso.OrdinaisOptions);
                 case TipoNumerais.Multiplicativos:
                     throw new NotSupportedException();
                 case TipoNumerais.Fracionarios:

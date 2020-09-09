@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoMetroTests
     {
-        private readonly Extenso _extenso = new Extenso(PresetOptions.Presets[Preset.Metro]);
+        private readonly Extenso _extenso = new Extenso(OpcoesPredefinidas.Predefinicoes[Predefinicoes.Metros]);
         public static IEnumerable<object[]> InstanciaParaEscreverValorPorcentagemCorretamente => new List<object[]>
         {
             new object[] { "0.00", "ZERO VÍRGULA ZERO ZERO METRO" },

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NumerosExtensos.Options;
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -6,7 +7,7 @@ namespace NumerosExtensos.Tipos.Ordinal
 {
     internal class Escrever
     {
-        public static string Numero(string numero, ExtensoOptions extenso)
+        public static string Numero(string numero, OrdinaisOptions extenso)
         {
             var regex = @"^" +                                            // Inicio
                         @"(?<numeros>[\d]{0,66})" +                       // Pode ou nao ter numeros
@@ -18,7 +19,7 @@ namespace NumerosExtensos.Tipos.Ordinal
             var numeroEscrito = EscreveValor(numero, extenso.DeveUsarExtensoFeminino);
 
             if (!string.IsNullOrWhiteSpace(numeroEscrito))
-                numeroEscrito += extenso.DepoisDaVirgulaSingular;
+                numeroEscrito += extenso.Singular;
 
             return Helpers.RemoveEspacosEmBranco(numeroEscrito);
         }

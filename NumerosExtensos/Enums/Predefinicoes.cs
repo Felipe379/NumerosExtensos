@@ -1,13 +1,13 @@
 ﻿namespace NumerosExtensos.Enums
 {
-    public enum Preset
+    public enum Predefinicoes
     {
         Nenhum,
-        Cardinal,
-        Ordinal,
+        Cardinais,
+        Ordinais,
         MonetarioBRL,
         Porcentagem,
-        Metro,
+        Metros,
         Romanos
     };
 }
