@@ -30,7 +30,7 @@ namespace Exemplo
                 DeveUsarExtensoFeminino = chk_ExtensoEmFeminino.Checked,
                 ZeroExplicitoAntesDaVirgula = chk_ZeroExplicitoAntesDaVirgula.Checked,
                 ZeroExplicitoDepoisDaVirgula = chk_ZeroExplicitoDepoisDaVirgula.Checked,
-                DeveUsarPrefixoDe = chk_PrefixoDe.Checked,
+                DeveUsarConjuncaoDe = chk_ConjuncaoDe.Checked,
                 AntesDaVirgulaSingular = txt_AntesDaVirgulaSingular.Text.ToLower().Trim(),
                 AntesDaVirgulaPlural = txt_AntesDaVirgulaPlural.Text.ToLower().Trim(),
                 Conector = txt_Conector.Text.ToLower().Trim(),
@@ -82,7 +82,7 @@ namespace Exemplo
             chk_ExtensoEmFeminino.Checked = PresetOptions.Presets[tipoPreset].DeveUsarExtensoFeminino;
             chk_ZeroExplicitoAntesDaVirgula.Checked = PresetOptions.Presets[tipoPreset].ZeroExplicitoAntesDaVirgula;
             chk_ZeroExplicitoDepoisDaVirgula.Checked = PresetOptions.Presets[tipoPreset].ZeroExplicitoDepoisDaVirgula;
-            chk_PrefixoDe.Checked = PresetOptions.Presets[tipoPreset].DeveUsarPrefixoDe;
+            chk_ConjuncaoDe.Checked = PresetOptions.Presets[tipoPreset].DeveUsarConjuncaoDe;
             txt_AntesDaVirgulaSingular.Text = PresetOptions.Presets[tipoPreset].AntesDaVirgulaSingular;
             txt_AntesDaVirgulaPlural.Text = PresetOptions.Presets[tipoPreset].AntesDaVirgulaPlural;
             txt_Conector.Text = PresetOptions.Presets[tipoPreset].Conector;
@@ -133,7 +133,7 @@ namespace Exemplo
                 chk_ExtensoEmFeminino.Enabled = true;
                 chk_ZeroExplicitoAntesDaVirgula.Enabled = false;
                 chk_ZeroExplicitoDepoisDaVirgula.Enabled = false;
-                chk_PrefixoDe.Enabled = false;
+                chk_ConjuncaoDe.Enabled = false;
                 txt_Conector.Enabled = false;
                 txt_AntesDaVirgulaSingular.Enabled = false;
                 txt_AntesDaVirgulaPlural.Enabled = false;
@@ -146,7 +146,7 @@ namespace Exemplo
                 chk_ExtensoEmFeminino.Enabled = true;
                 chk_ZeroExplicitoAntesDaVirgula.Enabled = true;
                 chk_ZeroExplicitoDepoisDaVirgula.Enabled = true;
-                chk_PrefixoDe.Enabled = true;
+                chk_ConjuncaoDe.Enabled = true;
                 txt_Conector.Enabled = true;
                 txt_AntesDaVirgulaSingular.Enabled = true;
                 txt_AntesDaVirgulaPlural.Enabled = true;
@@ -159,7 +159,7 @@ namespace Exemplo
                 chk_ExtensoEmFeminino.Enabled = false;
                 chk_ZeroExplicitoAntesDaVirgula.Enabled = false;
                 chk_ZeroExplicitoDepoisDaVirgula.Enabled = false;
-                chk_PrefixoDe.Enabled = false;
+                chk_ConjuncaoDe.Enabled = false;
                 txt_Conector.Enabled = false;
                 txt_AntesDaVirgulaSingular.Enabled = false;
                 txt_AntesDaVirgulaPlural.Enabled = false;

@@ -35,7 +35,11 @@ namespace NumerosExtensos.Tipos.Cardinal
 
             if (!string.IsNullOrWhiteSpace(numeroAntesDaVirgula))
             {
-                var antesDaVirgula = EscreveValor(numeroAntesDaVirgula, extenso.ZeroExplicitoAntesDaVirgula, extenso.DeveUsarPrefixoDe, extenso.DeveUsarExtensoFeminino);
+                var antesDaVirgula = EscreveValor(numeroAntesDaVirgula, extenso.ZeroExplicitoAntesDaVirgula, extenso.DeveUsarConjuncaoDe, extenso.DeveUsarExtensoFeminino);
+
+                if (!string.IsNullOrWhiteSpace(virgula) && antesDaVirgula.EndsWith(" De ") && string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaSingular) && string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaPlural))
+                    antesDaVirgula = antesDaVirgula.Remove(antesDaVirgula.Length - 4);
+
                 numeroEscrito += $" {antesDaVirgula} " + (antesDaVirgulaSingular ? $" {extenso.AntesDaVirgulaSingular} " : $" {extenso.AntesDaVirgulaPlural} ");
             }
 
@@ -44,7 +48,7 @@ namespace NumerosExtensos.Tipos.Cardinal
 
             if (!string.IsNullOrWhiteSpace(numeroDepoisDaVirgula))
             {
-                var depoisDaVirgula = EscreveValor(numeroDepoisDaVirgula, extenso.ZeroExplicitoDepoisDaVirgula, extenso.DeveUsarPrefixoDe, extenso.DeveUsarExtensoFeminino);
+                var depoisDaVirgula = EscreveValor(numeroDepoisDaVirgula, extenso.ZeroExplicitoDepoisDaVirgula, extenso.DeveUsarConjuncaoDe, extenso.DeveUsarExtensoFeminino);
                 if (string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaSingular) && string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaPlural))
                     numeroEscrito += $" {depoisDaVirgula} " + (antesDaVirgulaSingular ? $" {extenso.DepoisDaVirgulaSingular} " : $" {extenso.DepoisDaVirgulaPlural} ");
                 else
@@ -58,7 +62,7 @@ namespace NumerosExtensos.Tipos.Cardinal
             return Helpers.RemoveEspacosEmBranco(numeroEscrito);
         }
 
-        private static string EscreveValor(string numero, bool zeroExplicito, bool deveUsarPrefixoDe, bool extensoFeminino)
+        private static string EscreveValor(string numero, bool zeroExplicito, bool deveUsarConjuncaoDe, bool extensoFeminino)
         {
             var numeroEscrito = string.Empty;
 
@@ -71,6 +75,15 @@ namespace NumerosExtensos.Tipos.Cardinal
 
                 numero = numero.Substring(index);
             }
+            else if (Helpers.NumeroApenasZeros(numero))
+            {
+                numeroEscrito += EscrevePorExtenso(0, Nomenclatura.NumerosMasculino);
+                return numeroEscrito;
+            }
+            else
+            {
+                numero = Helpers.RemoveZerosAEsquerda(numero);
+            }
 
             while (numero.Count() % 3 != 0)
                 numero = numero.Insert(0, "0");
@@ -82,18 +95,22 @@ namespace NumerosExtensos.Tipos.Cardinal
             for (int i = quantidadeDeCasas - 1; i >= 0; i--)
             {
                 var valor = int.Parse(arrayDeNumeros[i]);
-                if (valor != 0 || (quantidadeDeCasas == 1 && !zeroExplicito))
+                if (valor != 0)
                 {
+                    if ((Helpers.NumeroComecaComZero(arrayDeNumeros[i]) || Helpers.NumeroTerminaEmCentenaCheia(arrayDeNumeros[i])) && i == 0 && quantidadeDeCasas > 1)
+                        numeroEscrito += " E ";
+
                     numeroEscrito += (extensoFeminino && i < 2) ? EscrevePorExtenso(valor, Nomenclatura.NumerosFeminino) : EscrevePorExtenso(valor, Nomenclatura.NumerosMasculino);
                     numeroEscrito += i < 2 ? $" {Nomenclatura.Classes[i]} " : valor == 1 ? $" {Nomenclatura.Classes[i]}ão " : $" {Nomenclatura.Classes[i]}ões ";
-                    numeroEscrito += " E ";
                 }
             }
 
-            if (numeroEscrito.EndsWith("E "))
-                numeroEscrito = numeroEscrito.Substring(0, numeroEscrito.Length - 2).Trim();
+            if (numeroEscrito.StartsWith("E "))
+                numeroEscrito = numeroEscrito.Remove(0, 2).Trim();
+            else
+                numeroEscrito = numeroEscrito.Trim();
 
-            if (deveUsarPrefixoDe && (numeroEscrito.EndsWith("ão") || numeroEscrito.EndsWith("ões")))
+            if (deveUsarConjuncaoDe && (numeroEscrito.EndsWith("ão") || numeroEscrito.EndsWith("ões")))
                 numeroEscrito += " De ";
 
             return numeroEscrito;

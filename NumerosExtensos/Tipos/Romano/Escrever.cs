@@ -12,7 +12,7 @@ namespace NumerosExtensos.Tipos.Romano
                         @"([0-3]?[0-9]?[0-9]?[0-9]?)" +                   // Valor entre 0 e 3999
                         @"$";                                             // Fim
 
-            if (!Regex.IsMatch(numero, regex))
+            if (!Regex.IsMatch(numero, regex) || Helpers.NumeroApenasZeros(numero))
                 throw new FormatException();
 
             var numeroEscrito = EscreveValor(numero);
