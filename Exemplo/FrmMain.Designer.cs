@@ -46,7 +46,7 @@
             this.chk_ExtensoEmFeminino = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cbo_Presets = new System.Windows.Forms.ComboBox();
-            this.chk_PrefixoDe = new System.Windows.Forms.CheckBox();
+            this.chk_ConjuncaoDe = new System.Windows.Forms.CheckBox();
             this.grpb_casing = new System.Windows.Forms.GroupBox();
             this.rdb_Frase = new System.Windows.Forms.RadioButton();
             this.rdb_Uppercase = new System.Windows.Forms.RadioButton();
@@ -178,7 +178,7 @@
             this.label5.Location = new System.Drawing.Point(507, 298);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(121, 15);
+            this.label5.Size = new System.Drawing.Size(120, 15);
             this.label5.TabIndex = 13;
             this.label5.Text = "Conector por extenso";
             // 
@@ -188,7 +188,7 @@
             this.chk_ZeroExplicitoAntesDaVirgula.Location = new System.Drawing.Point(518, 155);
             this.chk_ZeroExplicitoAntesDaVirgula.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chk_ZeroExplicitoAntesDaVirgula.Name = "chk_ZeroExplicitoAntesDaVirgula";
-            this.chk_ZeroExplicitoAntesDaVirgula.Size = new System.Drawing.Size(184, 19);
+            this.chk_ZeroExplicitoAntesDaVirgula.Size = new System.Drawing.Size(183, 19);
             this.chk_ZeroExplicitoAntesDaVirgula.TabIndex = 14;
             this.chk_ZeroExplicitoAntesDaVirgula.Text = "Zero explícito antes da vírgula";
             this.chk_ZeroExplicitoAntesDaVirgula.UseVisualStyleBackColor = true;
@@ -199,7 +199,7 @@
             this.chk_ZeroExplicitoDepoisDaVirgula.Location = new System.Drawing.Point(518, 181);
             this.chk_ZeroExplicitoDepoisDaVirgula.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chk_ZeroExplicitoDepoisDaVirgula.Name = "chk_ZeroExplicitoDepoisDaVirgula";
-            this.chk_ZeroExplicitoDepoisDaVirgula.Size = new System.Drawing.Size(191, 19);
+            this.chk_ZeroExplicitoDepoisDaVirgula.Size = new System.Drawing.Size(190, 19);
             this.chk_ZeroExplicitoDepoisDaVirgula.TabIndex = 15;
             this.chk_ZeroExplicitoDepoisDaVirgula.Text = "Zero explícito depois da vírgula";
             this.chk_ZeroExplicitoDepoisDaVirgula.UseVisualStyleBackColor = true;
@@ -221,9 +221,9 @@
             this.label6.Location = new System.Drawing.Point(507, 385);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(83, 15);
+            this.label6.Size = new System.Drawing.Size(78, 15);
             this.label6.TabIndex = 17;
-            this.label6.Text = "Pré-definições";
+            this.label6.Text = "Predefinições";
             // 
             // cbo_Presets
             // 
@@ -236,16 +236,16 @@
             this.cbo_Presets.TabIndex = 18;
             this.cbo_Presets.SelectedIndexChanged += new System.EventHandler(this.cbo_Presets_SelectedIndexChanged);
             // 
-            // chk_PrefixoDe
+            // chk_ConjuncaoDe
             // 
-            this.chk_PrefixoDe.AutoSize = true;
-            this.chk_PrefixoDe.Location = new System.Drawing.Point(518, 208);
-            this.chk_PrefixoDe.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.chk_PrefixoDe.Name = "chk_PrefixoDe";
-            this.chk_PrefixoDe.Size = new System.Drawing.Size(153, 19);
-            this.chk_PrefixoDe.TabIndex = 19;
-            this.chk_PrefixoDe.Text = "Deve usar o prefixo \"de\"";
-            this.chk_PrefixoDe.UseVisualStyleBackColor = true;
+            this.chk_ConjuncaoDe.AutoSize = true;
+            this.chk_ConjuncaoDe.Location = new System.Drawing.Point(518, 208);
+            this.chk_ConjuncaoDe.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.chk_ConjuncaoDe.Name = "chk_ConjuncaoDe";
+            this.chk_ConjuncaoDe.Size = new System.Drawing.Size(171, 19);
+            this.chk_ConjuncaoDe.TabIndex = 19;
+            this.chk_ConjuncaoDe.Text = "Deve usar a conjunção \"de\"";
+            this.chk_ConjuncaoDe.UseVisualStyleBackColor = true;
             // 
             // grpb_casing
             // 
@@ -366,7 +366,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(822, 418);
             this.Controls.Add(this.grpb_casing);
-            this.Controls.Add(this.chk_PrefixoDe);
+            this.Controls.Add(this.chk_ConjuncaoDe);
             this.Controls.Add(this.cbo_Presets);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.chk_ExtensoEmFeminino);
@@ -420,7 +420,7 @@
         private System.Windows.Forms.CheckBox chk_ExtensoEmFeminino;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbo_Presets;
-        private System.Windows.Forms.CheckBox chk_PrefixoDe;
+        private System.Windows.Forms.CheckBox chk_ConjuncaoDe;
         private System.Windows.Forms.GroupBox grpb_casing;
         private System.Windows.Forms.RadioButton rdb_Lowercase;
         private System.Windows.Forms.RadioButton rdb_Pascalcase;

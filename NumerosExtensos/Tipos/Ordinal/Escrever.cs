@@ -26,6 +26,17 @@ namespace NumerosExtensos.Tipos.Ordinal
         private static string EscreveValor(string numero, bool extensoFeminino)
         {
             var numeroEscrito = string.Empty;
+            var genero = extensoFeminino ? "a" : "o";
+
+            if (Helpers.NumeroApenasZeros(numero))
+            {
+                numeroEscrito += EscrevePorExtenso(0, genero);
+                return numeroEscrito;
+            }
+            else
+            {
+                numero = Helpers.RemoveZerosAEsquerda(numero);
+            }
 
             while (numero.Count() % 3 != 0)
                 numero = numero.Insert(0, "0");
@@ -33,7 +44,6 @@ namespace NumerosExtensos.Tipos.Ordinal
             var arrayDeNumeros = Helpers.ObtemArrayNumerico(numero);
 
             var quantidadeDeCasas = arrayDeNumeros.Count();
-            var genero = extensoFeminino ? "a" : "o";
 
             for (int i = quantidadeDeCasas - 1; i >= 0; i--)
             {

@@ -19,9 +19,25 @@ namespace NumerosExtensos.Tipos
             return new int[] { valorUnidade, valorDezena, valorCentena, valorMilhares };
         }
 
+        public static string RemoveZerosAEsquerda(string numero)
+        {
+            var index = 0;
+
+            while (index < numero.Length && numero[index] == '0')
+                index++;
+
+            return numero.Substring(index);
+        }
+
         public static string RemoveEspacosEmBranco(string numero) => Regex.Replace(numero, @"\s+", " ").Trim();
 
         public static bool NumeroSingular(string numero) => Regex.IsMatch(numero, @"^([0]*(1)?)$");
+
+        public static bool NumeroApenasZeros(string numero) => Regex.IsMatch(numero, @"^([0]*?)$");
+
+        public static bool NumeroTerminaEmCentenaCheia(string numero) => Regex.IsMatch(numero, @"^([1-9]{1}0{2})$");
+
+        public static bool NumeroComecaComZero(string numero) => Regex.IsMatch(numero, @"^([0]{1}[\d]{2})$");
 
         public static string[] ObtemArrayNumerico(string numero) => Regex.Replace(numero, ".{3}", "$0,")
                                                                          .Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
