@@ -1,10 +1,7 @@
-﻿using NumerosExtensos.Enums;
-
-namespace NumerosExtensos
+﻿namespace NumerosExtensos.Options
 {
-    public class ExtensoOptions
+    public class CardinaisOptions
     {
-        public TipoNumerais Tipo { get; set; }
         public bool DeveUsarExtensoFeminino { get; set; }
         public bool DeveUsarConjuncaoDe { get; set; }
         public bool ZeroExplicitoAntesDaVirgula { get; set; }

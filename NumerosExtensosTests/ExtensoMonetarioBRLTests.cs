@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoMonetarioBRLTests
     {
-        private readonly Extenso _extenso = new Extenso(PresetOptions.Presets[Preset.MonetarioBRL]);
+        private readonly Extenso _extenso = new Extenso(OpcoesPredefinidas.Predefinicoes[Predefinicoes.MonetarioBRL]);
         public static IEnumerable<object[]> InstanciaParaEscreverValorMonetarioBRLCorretamente => new List<object[]>
         {
             new object[] { "0.00", "ZERO REAL E ZERO CENTAVO" },

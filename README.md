@@ -1,5 +1,5 @@
 # NumerosExtensos
- Pacote que permite escrever os numerais da língua portuguesa por extenso.
+ Pacote que permite escrever os numerais da língua portuguesa (PT-BR) por extenso.
 
 ## Introdução
 Para começar instale o pacote [Nuget](https://www.nuget.org/packages/NumerosExtensos/).

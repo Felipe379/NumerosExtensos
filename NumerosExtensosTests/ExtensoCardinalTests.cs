@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoCardinalTests
     {
-        private readonly Extenso _extenso = new Extenso(PresetOptions.Presets[Preset.Cardinal]);
+        private readonly Extenso _extenso = new Extenso(OpcoesPredefinidas.Predefinicoes[Predefinicoes.Cardinais]);
         public static IEnumerable<object[]> InstanciaParaEscreverValorCardinalCorretamente => new List<object[]>
         {
             new object[] { "0.00", "ZERO VÍRGULA ZERO ZERO" },

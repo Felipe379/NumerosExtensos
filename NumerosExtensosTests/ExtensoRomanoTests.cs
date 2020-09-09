@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoRomanoTests
     {
-        private readonly Extenso _extenso = new Extenso(PresetOptions.Presets[Preset.Romanos]);
+        private readonly Extenso _extenso = new Extenso(OpcoesPredefinidas.Predefinicoes[Predefinicoes.Romanos]);
         public static IEnumerable<object[]> InstanciaParaEscreverValorOrdinalCorretamente => new List<object[]>
         {
             new object[] { "1", "I" },

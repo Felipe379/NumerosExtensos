@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoOrdinalTests
     {
-        private readonly Extenso _extenso = new Extenso(PresetOptions.Presets[Preset.Ordinal]);
+        private readonly Extenso _extenso = new Extenso(OpcoesPredefinidas.Predefinicoes[Predefinicoes.Ordinais]);
         public static IEnumerable<object[]> InstanciaParaEscreverValorOrdinalCorretamente => new List<object[]>
         {
             new object[] { "0", "NEUTRO" },

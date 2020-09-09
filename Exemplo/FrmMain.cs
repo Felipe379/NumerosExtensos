@@ -3,6 +3,7 @@ using NumerosExtensos.Enums;
 using System;
 using System.Windows.Forms;
 using System.Globalization;
+using NumerosExtensos.Options;
 
 namespace Exemplo
 {
@@ -12,38 +13,48 @@ namespace Exemplo
         {
             InitializeComponent();
             cbo_Presets.Items.Add("Nenhum");
-            cbo_Presets.Items.Add("Número Cardinal");
-            cbo_Presets.Items.Add("Número Ordinal");
-            cbo_Presets.Items.Add("Número Romano");
-            cbo_Presets.Items.Add("Real");
+            cbo_Presets.Items.Add("Números Cardinais");
+            cbo_Presets.Items.Add("Números Ordinais");
+            cbo_Presets.Items.Add("Números Romanos");
+            cbo_Presets.Items.Add("Monetário BRL");
             cbo_Presets.Items.Add("Porcentagem");
-            cbo_Presets.Items.Add("Metro");
+            cbo_Presets.Items.Add("Metros");
 
             cbo_Presets.SelectedIndex = 0;
         }
 
         private void btn_Escrever_Click(object sender, EventArgs e)
         {
+            var textInfo = CultureInfo.CurrentCulture.TextInfo;
             var extensoOptions = new ExtensoOptions
             {
                 Tipo = ObtemTipoNumeral(),
-                DeveUsarExtensoFeminino = chk_ExtensoEmFeminino.Checked,
-                ZeroExplicitoAntesDaVirgula = chk_ZeroExplicitoAntesDaVirgula.Checked,
-                ZeroExplicitoDepoisDaVirgula = chk_ZeroExplicitoDepoisDaVirgula.Checked,
-                DeveUsarConjuncaoDe = chk_ConjuncaoDe.Checked,
-                AntesDaVirgulaSingular = txt_AntesDaVirgulaSingular.Text.ToLower().Trim(),
-                AntesDaVirgulaPlural = txt_AntesDaVirgulaPlural.Text.ToLower().Trim(),
-                Conector = txt_Conector.Text.ToLower().Trim(),
-                DepoisDaVirgulaSingular = txt_DepoisDaVirgulaSingular.Text.ToLower().Trim(),
-                DepoisDaVirgulaPlural = txt_DepoisDaVirgulaPlural.Text.ToLower().Trim(),
             };
 
-            var textInfo = CultureInfo.CurrentCulture.TextInfo;
-            extensoOptions.AntesDaVirgulaSingular = textInfo.ToTitleCase(extensoOptions.AntesDaVirgulaSingular);
-            extensoOptions.AntesDaVirgulaPlural = textInfo.ToTitleCase(extensoOptions.AntesDaVirgulaPlural);
-            extensoOptions.DepoisDaVirgulaSingular = textInfo.ToTitleCase(extensoOptions.DepoisDaVirgulaSingular);
-            extensoOptions.DepoisDaVirgulaPlural = textInfo.ToTitleCase(extensoOptions.DepoisDaVirgulaPlural);
-            extensoOptions.Conector = textInfo.ToTitleCase(extensoOptions.Conector);
+            if (extensoOptions.Tipo == TipoNumerais.Cardinais)
+            {
+                extensoOptions.CardinaisOptions = new CardinaisOptions
+                {
+                    DeveUsarExtensoFeminino = chk_ExtensoEmFeminino.Checked,
+                    ZeroExplicitoAntesDaVirgula = chk_ZeroExplicitoAntesDaVirgula.Checked,
+                    ZeroExplicitoDepoisDaVirgula = chk_ZeroExplicitoDepoisDaVirgula.Checked,
+                    DeveUsarConjuncaoDe = chk_ConjuncaoDe.Checked,
+                    AntesDaVirgulaSingular = textInfo.ToTitleCase(txt_AntesDaVirgulaSingular.Text.ToLower().Trim()),
+                    AntesDaVirgulaPlural = textInfo.ToTitleCase(txt_AntesDaVirgulaPlural.Text.ToLower().Trim()),
+                    Conector = textInfo.ToTitleCase(txt_Conector.Text.ToLower().Trim()),
+                    DepoisDaVirgulaSingular = textInfo.ToTitleCase(txt_DepoisDaVirgulaSingular.Text.ToLower().Trim()),
+                    DepoisDaVirgulaPlural = textInfo.ToTitleCase(txt_DepoisDaVirgulaPlural.Text.ToLower().Trim()),
+                };
+            }
+            else if (extensoOptions.Tipo == TipoNumerais.Ordinais)
+            {
+                extensoOptions.OrdinaisOptions = new OrdinaisOptions
+                {
+                    DeveUsarExtensoFeminino = chk_ExtensoEmFeminino.Checked,
+                    Singular = textInfo.ToTitleCase(txt_DepoisDaVirgulaSingular.Text.ToLower().Trim())
+
+                };
+            }
 
             try
             {
@@ -70,44 +81,49 @@ namespace Exemplo
 
         private void cbo_Presets_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var tipoPreset = ObtemTipoPreset(cbo_Presets.SelectedIndex);
+            var tipoPredefinicao = ObtemTipoPreset(cbo_Presets.SelectedIndex);
 
-            if (PresetOptions.Presets[tipoPreset].Tipo == TipoNumerais.Cardinais)
+            if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].Tipo == TipoNumerais.Cardinais)
+            {
                 rdb_Cardinal.Checked = true;
-            else if (PresetOptions.Presets[tipoPreset].Tipo == TipoNumerais.Ordinais)
+                chk_ExtensoEmFeminino.Checked = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.DeveUsarExtensoFeminino;
+                chk_ZeroExplicitoAntesDaVirgula.Checked = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.ZeroExplicitoAntesDaVirgula;
+                chk_ZeroExplicitoDepoisDaVirgula.Checked = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.ZeroExplicitoDepoisDaVirgula;
+                chk_ConjuncaoDe.Checked = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.DeveUsarConjuncaoDe;
+                txt_AntesDaVirgulaSingular.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.AntesDaVirgulaSingular;
+                txt_AntesDaVirgulaPlural.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.AntesDaVirgulaPlural;
+                txt_Conector.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.Conector;
+                txt_DepoisDaVirgulaSingular.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.DepoisDaVirgulaSingular;
+                txt_DepoisDaVirgulaPlural.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.DepoisDaVirgulaPlural;
+            }
+            else if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].Tipo == TipoNumerais.Ordinais)
+            {
                 rdb_Ordinal.Checked = true;
-            else if (PresetOptions.Presets[tipoPreset].Tipo == TipoNumerais.Romanos)
+                chk_ExtensoEmFeminino.Checked = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].OrdinaisOptions.DeveUsarExtensoFeminino;
+                txt_DepoisDaVirgulaSingular.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].OrdinaisOptions.Singular;
+            }
+            else if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].Tipo == TipoNumerais.Romanos)
                 rdb_Romano.Checked = true;
-
-            chk_ExtensoEmFeminino.Checked = PresetOptions.Presets[tipoPreset].DeveUsarExtensoFeminino;
-            chk_ZeroExplicitoAntesDaVirgula.Checked = PresetOptions.Presets[tipoPreset].ZeroExplicitoAntesDaVirgula;
-            chk_ZeroExplicitoDepoisDaVirgula.Checked = PresetOptions.Presets[tipoPreset].ZeroExplicitoDepoisDaVirgula;
-            chk_ConjuncaoDe.Checked = PresetOptions.Presets[tipoPreset].DeveUsarConjuncaoDe;
-            txt_AntesDaVirgulaSingular.Text = PresetOptions.Presets[tipoPreset].AntesDaVirgulaSingular;
-            txt_AntesDaVirgulaPlural.Text = PresetOptions.Presets[tipoPreset].AntesDaVirgulaPlural;
-            txt_Conector.Text = PresetOptions.Presets[tipoPreset].Conector;
-            txt_DepoisDaVirgulaSingular.Text = PresetOptions.Presets[tipoPreset].DepoisDaVirgulaSingular;
-            txt_DepoisDaVirgulaPlural.Text = PresetOptions.Presets[tipoPreset].DepoisDaVirgulaPlural;
         }
 
-        private Preset ObtemTipoPreset(int cboIndex)
+        private Predefinicoes ObtemTipoPreset(int cboIndex)
         {
             switch (cboIndex)
             {
                 case 1:
-                    return Preset.Cardinal;
+                    return Predefinicoes.Cardinais;
                 case 2:
-                    return Preset.Ordinal;
+                    return Predefinicoes.Ordinais;
                 case 3:
-                    return Preset.Romanos;
+                    return Predefinicoes.Romanos;
                 case 4:
-                    return Preset.MonetarioBRL;
+                    return Predefinicoes.MonetarioBRL;
                 case 5:
-                    return Preset.Porcentagem;
+                    return Predefinicoes.Porcentagem;
                 case 6:
-                    return Preset.Metro;
+                    return Predefinicoes.Metros;
                 default:
-                    return Preset.Nenhum;
+                    return Predefinicoes.Nenhum;
             }
         }
 
@@ -138,7 +154,7 @@ namespace Exemplo
                 txt_AntesDaVirgulaSingular.Enabled = false;
                 txt_AntesDaVirgulaPlural.Enabled = false;
                 txt_DepoisDaVirgulaSingular.Enabled = true;
-                txt_DepoisDaVirgulaPlural.Enabled = true;
+                txt_DepoisDaVirgulaPlural.Enabled = false;
                 return TipoNumerais.Ordinais;
             }
             else if (rdb_Cardinal.Checked)

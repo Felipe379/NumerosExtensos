@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NumerosExtensos.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -7,7 +8,7 @@ namespace NumerosExtensos.Tipos.Cardinal
 {
     internal static class Escrever
     {
-        public static string Numero(string numero, ExtensoOptions extenso)
+        public static string Numero(string numero, CardinaisOptions extenso)
         {
             var regex = @"^" +                                            // Inicio
                         @"(?<sinal>(\+|-)?)" +                            // Pode ou nao ter sinal

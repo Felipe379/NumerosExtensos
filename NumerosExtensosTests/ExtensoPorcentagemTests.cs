@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoPorcentagemTests
     {
-        private readonly Extenso _extenso = new Extenso(PresetOptions.Presets[Preset.Porcentagem]);
+        private readonly Extenso _extenso = new Extenso(OpcoesPredefinidas.Predefinicoes[Predefinicoes.Porcentagem]);
         public static IEnumerable<object[]> InstanciaParaEscreverValorPorcentagemCorretamente => new List<object[]>
         {
             new object[] { "0.00", "ZERO VÍRGULA ZERO ZERO POR CENTO" },
