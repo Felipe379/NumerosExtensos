@@ -8,12 +8,10 @@
     <Copyright>Copyright © 2020 Felipe de Camargo</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/Felipe379/NumerosExtensos/</RepositoryUrl>
-    <Version>1.0.3</Version>
-    <PackageReleaseNotes>V1.0.3
-- Corrige bug que não escrevia "Zero" quando houvessem mais de três dígitos zeros;
-- Corrige bug ao escrever a conjunção "De" em alguns casos específicos;
-- Corrige a escrita de números cardinais para seguir a regra de ortografia correta:
--- Número com centena cheia ou começando com zero na primeira classe:  utiliza-se a conjunção e para ligar a segunda classe (de mil) à primeira classe de números quando o primeiro algarismo da primeira classe for uma centena "cheia" ou iniciar-se com zero.</PackageReleaseNotes>
+    <Version>1.1.0</Version>
+    <PackageReleaseNotes>V1.1.0
+- Renomeia as opções predefinidas;
+- Melhora o ExtensoOptions para diferenciar as opções disponíveis para os números cardinais e ordinais;</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
