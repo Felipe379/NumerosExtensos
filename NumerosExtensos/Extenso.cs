@@ -14,23 +14,16 @@ namespace NumerosExtensos
 
         public string EscreverNumero(string numero)
         {
-            switch (_extenso.Tipo)
+            return _extenso.Tipo switch
             {
-                case TipoNumerais.Cardinais:
-                    return Tipos.Cardinal.Escrever.Numero(numero, _extenso.CardinaisOptions);
-                case TipoNumerais.Ordinais:
-                    return Tipos.Ordinal.Escrever.Numero(numero, _extenso.OrdinaisOptions);
-                case TipoNumerais.Multiplicativos:
-                    throw new NotSupportedException();
-                case TipoNumerais.Fracionarios:
-                    throw new NotSupportedException();
-                case TipoNumerais.Coletivos:
-                    throw new NotSupportedException();
-                case TipoNumerais.Romanos:
-                    return Tipos.Romano.Escrever.Numero(numero);
-                default:
-                    throw new NotSupportedException();
-            }
+                TipoNumerais.Cardinais => Tipos.Cardinal.Escrever.Numero(numero, _extenso.CardinaisOptions),
+                TipoNumerais.Ordinais => Tipos.Ordinal.Escrever.Numero(numero, _extenso.OrdinaisOptions),
+                TipoNumerais.Multiplicativos => throw new NotSupportedException(),
+                TipoNumerais.Fracionarios => throw new NotSupportedException(),
+                TipoNumerais.Coletivos => throw new NotSupportedException(),
+                TipoNumerais.Romanos => Tipos.Romano.Escrever.Numero(numero),
+                _ => throw new NotSupportedException()
+            };
         }
     }
 }

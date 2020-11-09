@@ -108,23 +108,16 @@ namespace Exemplo
 
         private Predefinicoes ObtemTipoPreset(int cboIndex)
         {
-            switch (cboIndex)
+            return cboIndex switch
             {
-                case 1:
-                    return Predefinicoes.Cardinais;
-                case 2:
-                    return Predefinicoes.Ordinais;
-                case 3:
-                    return Predefinicoes.Romanos;
-                case 4:
-                    return Predefinicoes.MonetarioBRL;
-                case 5:
-                    return Predefinicoes.Porcentagem;
-                case 6:
-                    return Predefinicoes.Metros;
-                default:
-                    return Predefinicoes.Nenhum;
-            }
+                1 => Predefinicoes.Cardinais,
+                2 => Predefinicoes.Ordinais,
+                3 => Predefinicoes.Romanos,
+                4 => Predefinicoes.MonetarioBRL,
+                5 => Predefinicoes.Porcentagem,
+                6 => Predefinicoes.Metros,
+                _ => Predefinicoes.Nenhum
+            };
         }
 
         private void rdb_Cardinal_CheckedChanged(object sender, EventArgs e)
