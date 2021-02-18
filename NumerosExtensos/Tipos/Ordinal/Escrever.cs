@@ -1,4 +1,4 @@
-﻿using NumerosExtensos.Options;
+﻿using NumerosExtensos.Options.Numerais;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -7,8 +7,13 @@ namespace NumerosExtensos.Tipos.Ordinal
 {
     internal class Escrever
     {
-        public static string Numero(string numero, OrdinaisOptions extenso)
+        public static string Numero(string numero, NumeraisOptions extensoOptions)
         {
+            if (!(extensoOptions is OrdinaisOptions))
+                throw new InvalidOperationException();
+
+            var extenso = extensoOptions as OrdinaisOptions;
+
             var regex = @"^" +                                            // Inicio
                         @"(?<numeros>[\d]{0,66})" +                       // Pode ou nao ter numeros
                         @"$";                                             // Fim

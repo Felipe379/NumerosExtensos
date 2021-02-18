@@ -1,5 +1,6 @@
 ﻿using NumerosExtensos.Enums;
 using NumerosExtensos.Options;
+using NumerosExtensos.Options.Numerais;
 using System.Collections.Generic;
 
 namespace NumerosExtensos
@@ -11,12 +12,13 @@ namespace NumerosExtensos
             { Enums.Predefinicoes.Nenhum, new ExtensoOptions
                 {
                     Tipo = default,
+                    NumeraisOptions = new CardinaisOptions()
                 }
             },
             { Enums.Predefinicoes.Cardinais, new ExtensoOptions
                 {
                     Tipo = TipoNumerais.Cardinais,
-                    CardinaisOptions = new CardinaisOptions
+                    NumeraisOptions = new CardinaisOptions
                     {
                         DeveUsarExtensoFeminino = false,
                         ZeroExplicitoAntesDaVirgula = false,
@@ -33,7 +35,7 @@ namespace NumerosExtensos
             { Enums.Predefinicoes.Ordinais, new ExtensoOptions
                 {
                     Tipo = TipoNumerais.Ordinais,
-                    OrdinaisOptions = new OrdinaisOptions
+                    NumeraisOptions = new OrdinaisOptions
                     {
                         DeveUsarExtensoFeminino = false,
                     }
@@ -42,7 +44,7 @@ namespace NumerosExtensos
             { Enums.Predefinicoes.MonetarioBRL, new ExtensoOptions
                 {
                     Tipo = TipoNumerais.Cardinais,
-                    CardinaisOptions = new CardinaisOptions
+                    NumeraisOptions = new CardinaisOptions
                     {
                         DeveUsarExtensoFeminino = false,
                         ZeroExplicitoAntesDaVirgula = false,
@@ -59,7 +61,7 @@ namespace NumerosExtensos
             { Enums.Predefinicoes.Porcentagem, new ExtensoOptions
                 {
                     Tipo = TipoNumerais.Cardinais,
-                    CardinaisOptions = new CardinaisOptions
+                    NumeraisOptions = new CardinaisOptions
                     {
                         DeveUsarExtensoFeminino = false,
                         ZeroExplicitoAntesDaVirgula = false,
@@ -81,7 +83,7 @@ namespace NumerosExtensos
             { Enums.Predefinicoes.Metros, new ExtensoOptions
                 {
                     Tipo = TipoNumerais.Cardinais,
-                    CardinaisOptions = new CardinaisOptions
+                    NumeraisOptions = new CardinaisOptions
                     {
                         DeveUsarExtensoFeminino = false,
                         ZeroExplicitoAntesDaVirgula = false,

@@ -16,8 +16,8 @@ namespace NumerosExtensos
         {
             return _extenso.Tipo switch
             {
-                TipoNumerais.Cardinais => Tipos.Cardinal.Escrever.Numero(numero, _extenso.CardinaisOptions),
-                TipoNumerais.Ordinais => Tipos.Ordinal.Escrever.Numero(numero, _extenso.OrdinaisOptions),
+                TipoNumerais.Cardinais => Tipos.Cardinal.Escrever.Numero(numero, _extenso.NumeraisOptions),
+                TipoNumerais.Ordinais => Tipos.Ordinal.Escrever.Numero(numero, _extenso.NumeraisOptions),
                 TipoNumerais.Multiplicativos => throw new NotSupportedException(),
                 TipoNumerais.Fracionarios => throw new NotSupportedException(),
                 TipoNumerais.Coletivos => throw new NotSupportedException(),

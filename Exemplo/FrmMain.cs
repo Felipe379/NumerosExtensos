@@ -1,9 +1,10 @@
-﻿using NumerosExtensos;
-using NumerosExtensos.Enums;
-using System;
-using System.Windows.Forms;
-using System.Globalization;
+﻿using NumerosExtensos.Enums;
+using NumerosExtensos.Options.Numerais;
 using NumerosExtensos.Options;
+using NumerosExtensos;
+using System.Globalization;
+using System.Windows.Forms;
+using System;
 
 namespace Exemplo
 {
@@ -33,7 +34,7 @@ namespace Exemplo
 
             if (extensoOptions.Tipo == TipoNumerais.Cardinais)
             {
-                extensoOptions.CardinaisOptions = new CardinaisOptions
+                extensoOptions.NumeraisOptions = new CardinaisOptions
                 {
                     DeveUsarExtensoFeminino = chk_ExtensoEmFeminino.Checked,
                     ZeroExplicitoAntesDaVirgula = chk_ZeroExplicitoAntesDaVirgula.Checked,
@@ -48,11 +49,10 @@ namespace Exemplo
             }
             else if (extensoOptions.Tipo == TipoNumerais.Ordinais)
             {
-                extensoOptions.OrdinaisOptions = new OrdinaisOptions
+                extensoOptions.NumeraisOptions = new OrdinaisOptions
                 {
                     DeveUsarExtensoFeminino = chk_ExtensoEmFeminino.Checked,
                     Singular = textInfo.ToTitleCase(txt_DepoisDaVirgulaSingular.Text.ToLower().Trim())
-
                 };
             }
 
@@ -85,25 +85,45 @@ namespace Exemplo
 
             if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].Tipo == TipoNumerais.Cardinais)
             {
-                rdb_Cardinal.Checked = true;
-                chk_ExtensoEmFeminino.Checked = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.DeveUsarExtensoFeminino;
-                chk_ZeroExplicitoAntesDaVirgula.Checked = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.ZeroExplicitoAntesDaVirgula;
-                chk_ZeroExplicitoDepoisDaVirgula.Checked = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.ZeroExplicitoDepoisDaVirgula;
-                chk_ConjuncaoDe.Checked = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.DeveUsarConjuncaoDe;
-                txt_AntesDaVirgulaSingular.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.AntesDaVirgulaSingular;
-                txt_AntesDaVirgulaPlural.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.AntesDaVirgulaPlural;
-                txt_Conector.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.Conector;
-                txt_DepoisDaVirgulaSingular.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.DepoisDaVirgulaSingular;
-                txt_DepoisDaVirgulaPlural.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].CardinaisOptions.DepoisDaVirgulaPlural;
+                if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].NumeraisOptions is CardinaisOptions)
+                {
+                    var cardinaisOptions = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].NumeraisOptions as CardinaisOptions;
+
+                    rdb_Cardinal.Checked = true;
+                    chk_ExtensoEmFeminino.Checked = cardinaisOptions.DeveUsarExtensoFeminino;
+                    chk_ZeroExplicitoAntesDaVirgula.Checked = cardinaisOptions.ZeroExplicitoAntesDaVirgula;
+                    chk_ZeroExplicitoDepoisDaVirgula.Checked = cardinaisOptions.ZeroExplicitoDepoisDaVirgula;
+                    chk_ConjuncaoDe.Checked = cardinaisOptions.DeveUsarConjuncaoDe;
+                    txt_AntesDaVirgulaSingular.Text = cardinaisOptions.AntesDaVirgulaSingular;
+                    txt_AntesDaVirgulaPlural.Text = cardinaisOptions.AntesDaVirgulaPlural;
+                    txt_Conector.Text = cardinaisOptions.Conector;
+                    txt_DepoisDaVirgulaSingular.Text = cardinaisOptions.DepoisDaVirgulaSingular;
+                    txt_DepoisDaVirgulaPlural.Text = cardinaisOptions.DepoisDaVirgulaPlural;
+                }
+                else
+                {
+                    txt_NumeroPorExtenso.Text = "NumeraisOptions não é um objeto do tipo esperado.";
+                }
             }
             else if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].Tipo == TipoNumerais.Ordinais)
             {
-                rdb_Ordinal.Checked = true;
-                chk_ExtensoEmFeminino.Checked = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].OrdinaisOptions.DeveUsarExtensoFeminino;
-                txt_DepoisDaVirgulaSingular.Text = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].OrdinaisOptions.Singular;
+                if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].NumeraisOptions is OrdinaisOptions)
+                {
+                    var ordinaisOptions = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].NumeraisOptions as OrdinaisOptions;
+
+                    rdb_Ordinal.Checked = true;
+                    chk_ExtensoEmFeminino.Checked = ordinaisOptions.DeveUsarExtensoFeminino;
+                    txt_DepoisDaVirgulaSingular.Text = ordinaisOptions.Singular;
+                }
+                else
+                {
+                    txt_NumeroPorExtenso.Text = "NumeraisOptions não é um objeto do tipo esperado.";
+                }
             }
             else if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].Tipo == TipoNumerais.Romanos)
+            {
                 rdb_Romano.Checked = true;
+            }
         }
 
         private Predefinicoes ObtemTipoPreset(int cboIndex)

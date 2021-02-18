@@ -8,10 +8,9 @@
     <Copyright>Copyright © 2020 Felipe de Camargo</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/Felipe379/NumerosExtensos/</RepositoryUrl>
-    <Version>1.1.0</Version>
-    <PackageReleaseNotes>V1.1.0
-- Renomeia as opções predefinidas;
-- Melhora o ExtensoOptions para diferenciar as opções disponíveis para os números cardinais e ordinais;</PackageReleaseNotes>
+    <Version>1.2.0</Version>
+    <PackageReleaseNotes>V1.2.0
+- Atualiza as configurações de opções para utilizarem herança;</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

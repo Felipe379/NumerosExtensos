@@ -1,8 +1,7 @@
-﻿namespace NumerosExtensos.Options
+﻿namespace NumerosExtensos.Options.Numerais
 {
-    public class CardinaisOptions
+    public class CardinaisOptions : NumeraisOptions
     {
-        public bool DeveUsarExtensoFeminino { get; set; }
         public bool DeveUsarConjuncaoDe { get; set; }
         public bool ZeroExplicitoAntesDaVirgula { get; set; }
         public bool ZeroExplicitoDepoisDaVirgula { get; set; }

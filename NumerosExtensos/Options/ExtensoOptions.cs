@@ -1,11 +1,11 @@
 ﻿using NumerosExtensos.Enums;
+using NumerosExtensos.Options.Numerais;
 
 namespace NumerosExtensos.Options
 {
     public class ExtensoOptions
     {
         public TipoNumerais Tipo { get; set; }
-        public CardinaisOptions CardinaisOptions { get; set; } = new CardinaisOptions();
-        public OrdinaisOptions OrdinaisOptions { get; set; } = new OrdinaisOptions();
+        public NumeraisOptions NumeraisOptions { get; set; } = new NumeraisOptions();
     }
 }

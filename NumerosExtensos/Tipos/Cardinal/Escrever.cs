@@ -1,4 +1,4 @@
-﻿using NumerosExtensos.Options;
+﻿using NumerosExtensos.Options.Numerais;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +8,13 @@ namespace NumerosExtensos.Tipos.Cardinal
 {
     internal static class Escrever
     {
-        public static string Numero(string numero, CardinaisOptions extenso)
+        public static string Numero(string numero, NumeraisOptions extensoOptions)
         {
+            if (!(extensoOptions is CardinaisOptions))
+                throw new InvalidOperationException();
+
+            var extenso = extensoOptions as CardinaisOptions;
+
             var regex = @"^" +                                            // Inicio
                         @"(?<sinal>(\+|-)?)" +                            // Pode ou nao ter sinal
                         @"(?<numeroAntesDaVirgula>[\d]{0,66})" +          // Pode ou nao ter numeros antes da virgula
