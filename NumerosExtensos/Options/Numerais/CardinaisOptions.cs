@@ -3,12 +3,13 @@
     public class CardinaisOptions : NumeraisOptions
     {
         public bool DeveUsarConjuncaoDe { get; set; }
-        public bool ZeroExplicitoAntesDaVirgula { get; set; }
-        public bool ZeroExplicitoDepoisDaVirgula { get; set; }
-        public string AntesDaVirgulaSingular { get; set; }
-        public string AntesDaVirgulaPlural { get; set; }
-        public string Conector { get; set; }
-        public string DepoisDaVirgulaSingular { get; set; }
-        public string DepoisDaVirgulaPlural { get; set; }
+        public bool ZeroExplicitoParteInteira { get; set; }
+        public bool ZeroExplicitoParteDecimal { get; set; }
+        public bool ConjuncaoExplicitaSeParteInteiraVazia { get; set; }
+        public string ParteInteiraSingular { get; set; }
+        public string ParteInteiraPlural { get; set; }
+        public string Conjuncao { get; set; }
+        public string ParteDecimalSingular { get; set; }
+        public string ParteDecimalPlural { get; set; }
     }
 }

@@ -10,7 +10,13 @@
     <RepositoryUrl>https://github.com/Felipe379/NumerosExtensos/</RepositoryUrl>
     <Version>1.2.0</Version>
     <PackageReleaseNotes>V1.2.0
-- Atualiza as configurações de opções para utilizarem herança;</PackageReleaseNotes>
+- Atualiza as configurações de opções para utilizarem herança;
+- Renomeia nome das propriedades das opções;
+- Novas opções de configurações:
+-- NumeraisOptions: SepararClassesPorVirgula (bool)
+-- CardinaisOptions: ConjuncaoExplicitaSeParteInteiraVazia (bool)</PackageReleaseNotes>
+    <PackageTags>Números;Número;Extensos;Extenso;Escrita;Escrever;</PackageTags>
+    <RepositoryType></RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

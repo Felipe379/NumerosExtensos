@@ -21,7 +21,7 @@ namespace NumerosExtensos.Tipos.Ordinal
             if (!Regex.IsMatch(numero, regex))
                 throw new FormatException();
 
-            var numeroEscrito = EscreveValor(numero, extenso.DeveUsarExtensoFeminino);
+            var numeroEscrito = EscreveValor(numero, extenso.DeveUsarExtensoFeminino, extenso.SepararClassesPorVirgula);
 
             if (!string.IsNullOrWhiteSpace(numeroEscrito))
                 numeroEscrito += extenso.Singular;
@@ -29,7 +29,7 @@ namespace NumerosExtensos.Tipos.Ordinal
             return Helpers.RemoveEspacosEmBranco(numeroEscrito);
         }
 
-        private static string EscreveValor(string numero, bool extensoFeminino)
+        private static string EscreveValor(string numero, bool extensoFeminino, bool separarClassesPorVirgula)
         {
             var numeroEscrito = string.Empty;
             var genero = extensoFeminino ? "a" : "o";
@@ -56,8 +56,11 @@ namespace NumerosExtensos.Tipos.Ordinal
                 var valor = int.Parse(arrayDeNumeros[i]);
                 if (valor != 0 || quantidadeDeCasas == 1)
                 {
+                    if (separarClassesPorVirgula && quantidadeDeCasas != i + 1)
+                        numeroEscrito += ", ";
+
                     numeroEscrito += valor != 1 || i == 0 ? EscrevePorExtenso(valor, genero) : string.Empty;
-                    numeroEscrito += i != 0 ? $" {Nomenclatura.NomenclaturaClasses[i] + genero} " : string.Empty;
+                    numeroEscrito += i != 0 ? $" {Nomenclatura.NomenclaturaClasses[i] + genero}" : string.Empty;
                 }
             }
 
@@ -75,7 +78,7 @@ namespace NumerosExtensos.Tipos.Ordinal
             if (valorCentena > 0)
             {
                 if (valorCentena == valor)
-                    return $" {Nomenclatura.Numeros[valorCentena] + genero} ";
+                    return $" {Nomenclatura.Numeros[valorCentena] + genero}";
                 else
                     unidadePorExtenso += $" {Nomenclatura.Numeros[valorCentena] + genero} ";
             }
@@ -83,12 +86,12 @@ namespace NumerosExtensos.Tipos.Ordinal
             if (valorDezena > 0)
             {
                 if (valorDezena == valorDezena + valorUnidade)
-                    return unidadePorExtenso += $" {Nomenclatura.Numeros[valorDezena] + genero} ";
+                    return unidadePorExtenso += $" {Nomenclatura.Numeros[valorDezena] + genero}";
                 else if (valorDezena != 0)
                     unidadePorExtenso += $" {Nomenclatura.Numeros[valorDezena] + genero} ";
             }
 
-            unidadePorExtenso += $" {Nomenclatura.Numeros[valorUnidade] + genero} ";
+            unidadePorExtenso += $" {Nomenclatura.Numeros[valorUnidade] + genero}";
 
             return unidadePorExtenso;
         }

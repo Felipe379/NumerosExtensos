@@ -12,8 +12,8 @@ namespace NumerosExtensosTests
         {
             new object[] { "0.00", "ZERO REAL E ZERO CENTAVO" },
             new object[] { "0000", "ZERO REAL" },
-            new object[] { ",05", "E CINCO CENTAVOS" },
-            new object[] { ".10", "E DEZ CENTAVOS" },
+            new object[] { ",05", "CINCO CENTAVOS" },
+            new object[] { ".10", "DEZ CENTAVOS" },
             new object[] { "-10.00", "MENOS DEZ REAIS E ZERO CENTAVO" },
             new object[] { "-10.11", "MENOS DEZ REAIS E ONZE CENTAVOS" },
             new object[] { "999999999999999.99", "NOVECENTOS E NOVENTA E NOVE TRILHÕES NOVECENTOS E NOVENTA E NOVE BILHÕES NOVECENTOS E NOVENTA E NOVE MILHÕES NOVECENTOS E NOVENTA E NOVE MIL NOVECENTOS E NOVENTA E NOVE REAIS E NOVENTA E NOVE CENTAVOS" },

@@ -21,14 +21,16 @@ namespace NumerosExtensos
                     NumeraisOptions = new CardinaisOptions
                     {
                         DeveUsarExtensoFeminino = false,
-                        ZeroExplicitoAntesDaVirgula = false,
-                        ZeroExplicitoDepoisDaVirgula = true,
+                        SepararClassesPorVirgula = true,
+                        ZeroExplicitoParteInteira = false,
+                        ZeroExplicitoParteDecimal = true,
                         DeveUsarConjuncaoDe = false,
-                        AntesDaVirgulaSingular = "",
-                        AntesDaVirgulaPlural= "",
-                        Conector = "Vírgula",
-                        DepoisDaVirgulaSingular = "",
-                        DepoisDaVirgulaPlural = "",
+                        ConjuncaoExplicitaSeParteInteiraVazia = true,
+                        ParteInteiraSingular = "",
+                        ParteInteiraPlural= "",
+                        Conjuncao = "Vírgula",
+                        ParteDecimalSingular = "",
+                        ParteDecimalPlural = "",
                     }
                 }
             },
@@ -38,6 +40,7 @@ namespace NumerosExtensos
                     NumeraisOptions = new OrdinaisOptions
                     {
                         DeveUsarExtensoFeminino = false,
+                        SepararClassesPorVirgula = false,
                     }
                 }
             },
@@ -47,14 +50,16 @@ namespace NumerosExtensos
                     NumeraisOptions = new CardinaisOptions
                     {
                         DeveUsarExtensoFeminino = false,
-                        ZeroExplicitoAntesDaVirgula = false,
-                        ZeroExplicitoDepoisDaVirgula = false,
+                        SepararClassesPorVirgula = false,
+                        ZeroExplicitoParteInteira = false,
+                        ZeroExplicitoParteDecimal = false,
                         DeveUsarConjuncaoDe = true,
-                        AntesDaVirgulaSingular = "Real",
-                        AntesDaVirgulaPlural= "Reais",
-                        Conector = "E",
-                        DepoisDaVirgulaSingular = "Centavo",
-                        DepoisDaVirgulaPlural = "Centavos",
+                        ConjuncaoExplicitaSeParteInteiraVazia = false,
+                        ParteInteiraSingular = "Real",
+                        ParteInteiraPlural= "Reais",
+                        Conjuncao = "E",
+                        ParteDecimalSingular = "Centavo",
+                        ParteDecimalPlural = "Centavos",
                     }
                 }
             },
@@ -64,14 +69,16 @@ namespace NumerosExtensos
                     NumeraisOptions = new CardinaisOptions
                     {
                         DeveUsarExtensoFeminino = false,
-                        ZeroExplicitoAntesDaVirgula = false,
-                        ZeroExplicitoDepoisDaVirgula = true,
+                        SepararClassesPorVirgula = false,
+                        ZeroExplicitoParteInteira = false,
+                        ZeroExplicitoParteDecimal = true,
                         DeveUsarConjuncaoDe = false,
-                        AntesDaVirgulaSingular = "",
-                        AntesDaVirgulaPlural= "",
-                        Conector = "Vírgula",
-                        DepoisDaVirgulaSingular = "Por Cento",
-                        DepoisDaVirgulaPlural = "Por Cento",
+                        ConjuncaoExplicitaSeParteInteiraVazia = true,
+                        ParteInteiraSingular = "",
+                        ParteInteiraPlural= "",
+                        Conjuncao = "Vírgula",
+                        ParteDecimalSingular = "Por Cento",
+                        ParteDecimalPlural = "Por Cento",
                     }
                 }
             },
@@ -86,14 +93,16 @@ namespace NumerosExtensos
                     NumeraisOptions = new CardinaisOptions
                     {
                         DeveUsarExtensoFeminino = false,
-                        ZeroExplicitoAntesDaVirgula = false,
-                        ZeroExplicitoDepoisDaVirgula = true,
+                        SepararClassesPorVirgula = false,
+                        ZeroExplicitoParteInteira = true,
+                        ZeroExplicitoParteDecimal = true,
                         DeveUsarConjuncaoDe = true,
-                        AntesDaVirgulaSingular = "",
-                        AntesDaVirgulaPlural= "",
-                        Conector = "Vírgula",
-                        DepoisDaVirgulaSingular = "Metro",
-                        DepoisDaVirgulaPlural = "Metros",
+                        ConjuncaoExplicitaSeParteInteiraVazia = true,
+                        ParteInteiraSingular = "",
+                        ParteInteiraPlural= "",
+                        Conjuncao = "Vírgula",
+                        ParteDecimalSingular = "Metro",
+                        ParteDecimalPlural = "Metros",
                     }
                 }
             }

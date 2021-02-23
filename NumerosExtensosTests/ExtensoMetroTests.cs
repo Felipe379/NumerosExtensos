@@ -11,7 +11,7 @@ namespace NumerosExtensosTests
         public static IEnumerable<object[]> InstanciaParaEscreverValorPorcentagemCorretamente => new List<object[]>
         {
             new object[] { "0.00", "ZERO VÍRGULA ZERO ZERO METRO" },
-            new object[] { "0000", "ZERO METRO" },
+            new object[] { "0000", "ZERO ZERO ZERO ZERO METRO" },
             new object[] { ",05", "VÍRGULA ZERO CINCO METRO" },
             new object[] { ".10", "VÍRGULA DEZ METRO" },
             new object[] { "-10", "MENOS DEZ METROS" },

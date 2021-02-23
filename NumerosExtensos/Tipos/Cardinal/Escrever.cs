@@ -17,9 +17,9 @@ namespace NumerosExtensos.Tipos.Cardinal
 
             var regex = @"^" +                                            // Inicio
                         @"(?<sinal>(\+|-)?)" +                            // Pode ou nao ter sinal
-                        @"(?<numeroAntesDaVirgula>[\d]{0,66})" +          // Pode ou nao ter numeros antes da virgula
+                        @"(?<numeroParteInteira>[\d]{0,66})" +          // Pode ou nao ter numeros antes da virgula
                         @"(?<temVirgula>(,|\.)?)" +                       // Pode ou nao ter virgula
-                        @"(?<numeroDepoisDaVirgula>[\d]{0,66})" +         // Pode ou nao ter numeros depois da virgula
+                        @"(?<numeroParteDecimal>[\d]{0,66})" +         // Pode ou nao ter numeros depois da virgula
                         @"$";                                             // Fim
 
             if (!Regex.IsMatch(numero, regex))
@@ -28,47 +28,58 @@ namespace NumerosExtensos.Tipos.Cardinal
             var token = new Regex(regex).Match(numero);
             var sinal = token.Groups["sinal"].ToString();
             var virgula = token.Groups["temVirgula"].ToString();
-            var numeroAntesDaVirgula = token.Groups["numeroAntesDaVirgula"].ToString();
-            var numeroDepoisDaVirgula = token.Groups["numeroDepoisDaVirgula"].ToString();
+            var numeroParteInteira = token.Groups["numeroParteInteira"].ToString();
+            var numeroParteDecimal = token.Groups["numeroParteDecimal"].ToString();
 
-            if (string.IsNullOrWhiteSpace(virgula) && !string.IsNullOrWhiteSpace(numeroDepoisDaVirgula))
+            if (string.IsNullOrWhiteSpace(virgula) && !string.IsNullOrWhiteSpace(numeroParteDecimal))
                 throw new FormatException();
 
             var numeroEscrito = string.IsNullOrWhiteSpace(sinal) ? string.Empty : sinal == "-" ? " Menos " : " Mais ";
 
-            var antesDaVirgulaSingular = Helpers.NumeroSingular(numeroAntesDaVirgula);
-            var depoisDaVirgulaSingular = Helpers.NumeroSingular(numeroDepoisDaVirgula);
+            var parteInteiraSingular = Helpers.NumeroSingular(numeroParteInteira);
+            var parteDecimalSingular = Helpers.NumeroSingular(numeroParteDecimal);
+            var valorEscrito = string.Empty;
 
-            if (!string.IsNullOrWhiteSpace(numeroAntesDaVirgula))
+            if (!string.IsNullOrWhiteSpace(numeroParteInteira))
             {
-                var antesDaVirgula = EscreveValor(numeroAntesDaVirgula, extenso.ZeroExplicitoAntesDaVirgula, extenso.DeveUsarConjuncaoDe, extenso.DeveUsarExtensoFeminino);
+                valorEscrito = EscreveValor(numeroParteInteira, extenso.ZeroExplicitoParteInteira, extenso.DeveUsarConjuncaoDe, extenso.DeveUsarExtensoFeminino, extenso.SepararClassesPorVirgula);
 
-                if (!string.IsNullOrWhiteSpace(virgula) && antesDaVirgula.EndsWith(" De ") && string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaSingular) && string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaPlural))
-                    antesDaVirgula = antesDaVirgula.Remove(antesDaVirgula.Length - 4);
+                if (!string.IsNullOrWhiteSpace(virgula) && valorEscrito.EndsWith(" De ") && string.IsNullOrWhiteSpace(extenso.ParteInteiraSingular) && string.IsNullOrWhiteSpace(extenso.ParteInteiraPlural))
+                    valorEscrito = valorEscrito.Remove(valorEscrito.Length - 4);
 
-                numeroEscrito += $" {antesDaVirgula} " + (antesDaVirgulaSingular ? $" {extenso.AntesDaVirgulaSingular} " : $" {extenso.AntesDaVirgulaPlural} ");
+                numeroEscrito += $" {valorEscrito} " + (parteInteiraSingular ? $" {extenso.ParteInteiraSingular} " : $" {extenso.ParteInteiraPlural} ");
             }
 
             if (!string.IsNullOrWhiteSpace(virgula))
-                numeroEscrito += $" {extenso.Conector} ";
-
-            if (!string.IsNullOrWhiteSpace(numeroDepoisDaVirgula))
             {
-                var depoisDaVirgula = EscreveValor(numeroDepoisDaVirgula, extenso.ZeroExplicitoDepoisDaVirgula, extenso.DeveUsarConjuncaoDe, extenso.DeveUsarExtensoFeminino);
-                if (string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaSingular) && string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaPlural))
-                    numeroEscrito += $" {depoisDaVirgula} " + (antesDaVirgulaSingular ? $" {extenso.DepoisDaVirgulaSingular} " : $" {extenso.DepoisDaVirgulaPlural} ");
+                if (string.IsNullOrWhiteSpace(valorEscrito))
+                {
+                    if (extenso.ConjuncaoExplicitaSeParteInteiraVazia)
+                        numeroEscrito += $" {extenso.Conjuncao} ";
+                }
                 else
-                    numeroEscrito += $" {depoisDaVirgula} " + (depoisDaVirgulaSingular ? $" {extenso.DepoisDaVirgulaSingular} " : $" {extenso.DepoisDaVirgulaPlural} ");
+                {
+                    numeroEscrito += $" {extenso.Conjuncao} ";
+                }
             }
-            else if (string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaSingular) && string.IsNullOrWhiteSpace(extenso.AntesDaVirgulaPlural))
+
+            if (!string.IsNullOrWhiteSpace(numeroParteDecimal))
             {
-                numeroEscrito += antesDaVirgulaSingular ? $" {extenso.DepoisDaVirgulaSingular} " : $" {extenso.DepoisDaVirgulaPlural} ";
+                valorEscrito = EscreveValor(numeroParteDecimal, extenso.ZeroExplicitoParteDecimal, extenso.DeveUsarConjuncaoDe, extenso.DeveUsarExtensoFeminino, extenso.SepararClassesPorVirgula);
+                if (string.IsNullOrWhiteSpace(extenso.ParteInteiraSingular) && string.IsNullOrWhiteSpace(extenso.ParteInteiraPlural))
+                    numeroEscrito += $" {valorEscrito} " + (parteInteiraSingular ? $" {extenso.ParteDecimalSingular} " : $" {extenso.ParteDecimalPlural} ");
+                else
+                    numeroEscrito += $" {valorEscrito} " + (parteDecimalSingular ? $" {extenso.ParteDecimalSingular} " : $" {extenso.ParteDecimalPlural} ");
+            }
+            else if (string.IsNullOrWhiteSpace(extenso.ParteInteiraSingular) && string.IsNullOrWhiteSpace(extenso.ParteInteiraPlural))
+            {
+                numeroEscrito += parteInteiraSingular ? $" {extenso.ParteDecimalSingular} " : $" {extenso.ParteDecimalPlural} ";
             }
 
             return Helpers.RemoveEspacosEmBranco(numeroEscrito);
         }
 
-        private static string EscreveValor(string numero, bool zeroExplicito, bool deveUsarConjuncaoDe, bool extensoFeminino)
+        private static string EscreveValor(string numero, bool zeroExplicito, bool deveUsarConjuncaoDe, bool extensoFeminino, bool separarClassesPorVirgula)
         {
             var numeroEscrito = string.Empty;
 
@@ -105,18 +116,17 @@ namespace NumerosExtensos.Tipos.Cardinal
                 {
                     if ((Helpers.NumeroComecaComZero(arrayDeNumeros[i]) || Helpers.NumeroTerminaEmCentenaCheia(arrayDeNumeros[i])) && i == 0 && quantidadeDeCasas > 1)
                         numeroEscrito += " E ";
+                    else if (separarClassesPorVirgula && quantidadeDeCasas != i + 1)
+                        numeroEscrito += ", ";
 
                     numeroEscrito += (extensoFeminino && i < 2) ? EscrevePorExtenso(valor, Nomenclatura.NumerosFeminino) : EscrevePorExtenso(valor, Nomenclatura.NumerosMasculino);
-                    numeroEscrito += i < 2 ? $" {Nomenclatura.Classes[i]} " : valor == 1 ? $" {Nomenclatura.Classes[i]}ão " : $" {Nomenclatura.Classes[i]}ões ";
+                    numeroEscrito += i < 2 ? $" {Nomenclatura.Classes[i]}" : valor == 1 ? $" {Nomenclatura.Classes[i]}ão" : $" {Nomenclatura.Classes[i]}ões";
                 }
             }
 
-            if (numeroEscrito.StartsWith("E "))
-                numeroEscrito = numeroEscrito.Remove(0, 2).Trim();
-            else
-                numeroEscrito = numeroEscrito.Trim();
+            numeroEscrito = numeroEscrito.Trim();
 
-            if (deveUsarConjuncaoDe && (numeroEscrito.EndsWith("ão") || numeroEscrito.EndsWith("ões")))
+            if (deveUsarConjuncaoDe && (numeroEscrito.EndsWith("ão") || numeroEscrito.EndsWith("ões") || numeroEscrito.EndsWith("ão,") || numeroEscrito.EndsWith("ões,")))
                 numeroEscrito += " De ";
 
             return numeroEscrito;
@@ -133,7 +143,7 @@ namespace NumerosExtensos.Tipos.Cardinal
             if (valorCentena > 0)
             {
                 if (valorCentena == valor)
-                    return valorCentena == 100 ? $" {valorPorExtenso[valorCentena * -1]} " : $" {valorPorExtenso[valorCentena]} ";
+                    return valorCentena == 100 ? $" {valorPorExtenso[valorCentena * -1]}" : $" {valorPorExtenso[valorCentena]}";
                 else
                     unidadePorExtenso += $" {valorPorExtenso[valorCentena]} E ";
             }
@@ -141,14 +151,14 @@ namespace NumerosExtensos.Tipos.Cardinal
             if (valorDezena > 0)
             {
                 if (valorDezena == valorDezena + valorUnidade)
-                    return unidadePorExtenso += $" {valorPorExtenso[valorDezena]} ";
+                    return unidadePorExtenso += $" {valorPorExtenso[valorDezena]}";
                 else if (valorDezena == 10)
-                    return unidadePorExtenso += $" {valorPorExtenso[valorDezena + valorUnidade]} ";
+                    return unidadePorExtenso += $" {valorPorExtenso[valorDezena + valorUnidade]}";
                 else if (valorDezena != 0)
                     unidadePorExtenso += $" {valorPorExtenso[valorDezena]} E ";
             }
 
-            unidadePorExtenso += $" {valorPorExtenso[valorUnidade]} ";
+            unidadePorExtenso += $" {valorPorExtenso[valorUnidade]}";
 
             return unidadePorExtenso;
         }

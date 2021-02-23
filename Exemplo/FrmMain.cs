@@ -13,14 +13,13 @@ namespace Exemplo
         public FrmMain()
         {
             InitializeComponent();
-            cbo_Presets.Items.Add("Nenhum");
-            cbo_Presets.Items.Add("Números Cardinais");
-            cbo_Presets.Items.Add("Números Ordinais");
-            cbo_Presets.Items.Add("Números Romanos");
-            cbo_Presets.Items.Add("Monetário BRL");
-            cbo_Presets.Items.Add("Porcentagem");
-            cbo_Presets.Items.Add("Metros");
 
+            cbo_Casing.Items.AddRange(new[] { "Uppercase", "Lowercase", "Frase", "Pascalcase" });
+            cbo_Tipo.Items.AddRange(new[] { "Cardinal", "Ordinal", "Romano" });
+            cbo_Presets.Items.AddRange(new[] { "Nenhum", "Números Cardinais", "Números Ordinais", "Números Romanos", "Monetário BRL", "Porcentagem", "Metros" });
+
+            cbo_Casing.SelectedIndex = 0;
+            cbo_Tipo.SelectedIndex = 0;
             cbo_Presets.SelectedIndex = 0;
         }
 
@@ -37,14 +36,16 @@ namespace Exemplo
                 extensoOptions.NumeraisOptions = new CardinaisOptions
                 {
                     DeveUsarExtensoFeminino = chk_ExtensoEmFeminino.Checked,
-                    ZeroExplicitoAntesDaVirgula = chk_ZeroExplicitoAntesDaVirgula.Checked,
-                    ZeroExplicitoDepoisDaVirgula = chk_ZeroExplicitoDepoisDaVirgula.Checked,
+                    SepararClassesPorVirgula = chk_SepararClassesPorVirgula.Checked,
+                    ZeroExplicitoParteInteira = chk_ZeroExplicitoParteInteira.Checked,
+                    ZeroExplicitoParteDecimal = chk_ZeroExplicitoParteDecimal.Checked,
                     DeveUsarConjuncaoDe = chk_ConjuncaoDe.Checked,
-                    AntesDaVirgulaSingular = textInfo.ToTitleCase(txt_AntesDaVirgulaSingular.Text.ToLower().Trim()),
-                    AntesDaVirgulaPlural = textInfo.ToTitleCase(txt_AntesDaVirgulaPlural.Text.ToLower().Trim()),
-                    Conector = textInfo.ToTitleCase(txt_Conector.Text.ToLower().Trim()),
-                    DepoisDaVirgulaSingular = textInfo.ToTitleCase(txt_DepoisDaVirgulaSingular.Text.ToLower().Trim()),
-                    DepoisDaVirgulaPlural = textInfo.ToTitleCase(txt_DepoisDaVirgulaPlural.Text.ToLower().Trim()),
+                    ConjuncaoExplicitaSeParteInteiraVazia = chk_ConjuncaoExplicitaSeParteInteiraVazia.Checked,
+                    ParteInteiraSingular = textInfo.ToTitleCase(txt_ParteInteiraSingular.Text.ToLower().Trim()),
+                    ParteInteiraPlural = textInfo.ToTitleCase(txt_ParteInteiraPlural.Text.ToLower().Trim()),
+                    Conjuncao = textInfo.ToTitleCase(txt_Conjuncao.Text.ToLower().Trim()),
+                    ParteDecimalSingular = textInfo.ToTitleCase(txt_ParteDecimalSingular.Text.ToLower().Trim()),
+                    ParteDecimalPlural = textInfo.ToTitleCase(txt_ParteDecimalPlural.Text.ToLower().Trim()),
                 };
             }
             else if (extensoOptions.Tipo == TipoNumerais.Ordinais)
@@ -52,7 +53,8 @@ namespace Exemplo
                 extensoOptions.NumeraisOptions = new OrdinaisOptions
                 {
                     DeveUsarExtensoFeminino = chk_ExtensoEmFeminino.Checked,
-                    Singular = textInfo.ToTitleCase(txt_DepoisDaVirgulaSingular.Text.ToLower().Trim())
+                    SepararClassesPorVirgula = chk_SepararClassesPorVirgula.Checked,
+                    Singular = textInfo.ToTitleCase(txt_ParteDecimalSingular.Text.ToLower().Trim())
                 };
             }
 
@@ -63,11 +65,11 @@ namespace Exemplo
 
                 if (!string.IsNullOrWhiteSpace(numeroPorExtenso))
                 {
-                    if (rdb_Lowercase.Checked)
-                        numeroPorExtenso = numeroPorExtenso.ToLower();
-                    else if (rdb_Uppercase.Checked)
+                    if (cbo_Casing.SelectedIndex == 0)
                         numeroPorExtenso = numeroPorExtenso.ToUpper();
-                    else if (rdb_Frase.Checked)
+                    else if (cbo_Casing.SelectedIndex == 1)
+                        numeroPorExtenso = numeroPorExtenso.ToLower();
+                    else if (cbo_Casing.SelectedIndex == 2)
                         numeroPorExtenso = char.ToUpperInvariant(numeroPorExtenso[0]) + numeroPorExtenso.Substring(1).ToLower();
                 }
 
@@ -89,16 +91,18 @@ namespace Exemplo
                 {
                     var cardinaisOptions = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].NumeraisOptions as CardinaisOptions;
 
-                    rdb_Cardinal.Checked = true;
+                    cbo_Tipo.SelectedIndex = 0;
                     chk_ExtensoEmFeminino.Checked = cardinaisOptions.DeveUsarExtensoFeminino;
-                    chk_ZeroExplicitoAntesDaVirgula.Checked = cardinaisOptions.ZeroExplicitoAntesDaVirgula;
-                    chk_ZeroExplicitoDepoisDaVirgula.Checked = cardinaisOptions.ZeroExplicitoDepoisDaVirgula;
+                    chk_ZeroExplicitoParteInteira.Checked = cardinaisOptions.ZeroExplicitoParteInteira;
+                    chk_ZeroExplicitoParteDecimal.Checked = cardinaisOptions.ZeroExplicitoParteDecimal;
+                    chk_SepararClassesPorVirgula.Checked = cardinaisOptions.SepararClassesPorVirgula;
                     chk_ConjuncaoDe.Checked = cardinaisOptions.DeveUsarConjuncaoDe;
-                    txt_AntesDaVirgulaSingular.Text = cardinaisOptions.AntesDaVirgulaSingular;
-                    txt_AntesDaVirgulaPlural.Text = cardinaisOptions.AntesDaVirgulaPlural;
-                    txt_Conector.Text = cardinaisOptions.Conector;
-                    txt_DepoisDaVirgulaSingular.Text = cardinaisOptions.DepoisDaVirgulaSingular;
-                    txt_DepoisDaVirgulaPlural.Text = cardinaisOptions.DepoisDaVirgulaPlural;
+                    chk_ConjuncaoExplicitaSeParteInteiraVazia.Checked = cardinaisOptions.ConjuncaoExplicitaSeParteInteiraVazia;
+                    txt_ParteInteiraSingular.Text = cardinaisOptions.ParteInteiraSingular;
+                    txt_ParteInteiraPlural.Text = cardinaisOptions.ParteInteiraPlural;
+                    txt_Conjuncao.Text = cardinaisOptions.Conjuncao;
+                    txt_ParteDecimalSingular.Text = cardinaisOptions.ParteDecimalSingular;
+                    txt_ParteDecimalPlural.Text = cardinaisOptions.ParteDecimalPlural;
                 }
                 else
                 {
@@ -111,9 +115,10 @@ namespace Exemplo
                 {
                     var ordinaisOptions = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].NumeraisOptions as OrdinaisOptions;
 
-                    rdb_Ordinal.Checked = true;
+                    cbo_Tipo.SelectedIndex = 1;
                     chk_ExtensoEmFeminino.Checked = ordinaisOptions.DeveUsarExtensoFeminino;
-                    txt_DepoisDaVirgulaSingular.Text = ordinaisOptions.Singular;
+                    chk_SepararClassesPorVirgula.Checked = ordinaisOptions.SepararClassesPorVirgula;
+                    txt_ParteDecimalSingular.Text = ordinaisOptions.Singular;
                 }
                 else
                 {
@@ -122,7 +127,7 @@ namespace Exemplo
             }
             else if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].Tipo == TipoNumerais.Romanos)
             {
-                rdb_Romano.Checked = true;
+                cbo_Tipo.SelectedIndex = 2;
             }
         }
 
@@ -140,63 +145,58 @@ namespace Exemplo
             };
         }
 
-        private void rdb_Cardinal_CheckedChanged(object sender, EventArgs e)
-        {
-            ObtemTipoNumeral();
-        }
-
-        private void rdb_Ordinal_CheckedChanged(object sender, EventArgs e)
-        {
-            ObtemTipoNumeral();
-        }
-
-        private void rdb_Romano_CheckedChanged(object sender, EventArgs e)
+        private void cbo_Tipos_SelectedIndexChanged(object sender, EventArgs e)
         {
             ObtemTipoNumeral();
         }
 
         private TipoNumerais ObtemTipoNumeral()
         {
-            if (rdb_Ordinal.Checked)
+            if (cbo_Tipo.SelectedIndex == 0)
             {
                 chk_ExtensoEmFeminino.Enabled = true;
-                chk_ZeroExplicitoAntesDaVirgula.Enabled = false;
-                chk_ZeroExplicitoDepoisDaVirgula.Enabled = false;
-                chk_ConjuncaoDe.Enabled = false;
-                txt_Conector.Enabled = false;
-                txt_AntesDaVirgulaSingular.Enabled = false;
-                txt_AntesDaVirgulaPlural.Enabled = false;
-                txt_DepoisDaVirgulaSingular.Enabled = true;
-                txt_DepoisDaVirgulaPlural.Enabled = false;
-                return TipoNumerais.Ordinais;
-            }
-            else if (rdb_Cardinal.Checked)
-            {
-                chk_ExtensoEmFeminino.Enabled = true;
-                chk_ZeroExplicitoAntesDaVirgula.Enabled = true;
-                chk_ZeroExplicitoDepoisDaVirgula.Enabled = true;
+                chk_SepararClassesPorVirgula.Enabled = true;
+                chk_ZeroExplicitoParteInteira.Enabled = true;
+                chk_ZeroExplicitoParteDecimal.Enabled = true;
                 chk_ConjuncaoDe.Enabled = true;
-                txt_Conector.Enabled = true;
-                txt_AntesDaVirgulaSingular.Enabled = true;
-                txt_AntesDaVirgulaPlural.Enabled = true;
-                txt_DepoisDaVirgulaSingular.Enabled = true;
-                txt_DepoisDaVirgulaPlural.Enabled = true;
+                chk_ConjuncaoExplicitaSeParteInteiraVazia.Enabled = true;
+                txt_Conjuncao.Enabled = true;
+                txt_ParteInteiraSingular.Enabled = true;
+                txt_ParteInteiraPlural.Enabled = true;
+                txt_ParteDecimalSingular.Enabled = true;
+                txt_ParteDecimalPlural.Enabled = true;
                 return TipoNumerais.Cardinais;
+            }
+            else if (cbo_Tipo.SelectedIndex == 1)
+            {
+                chk_ExtensoEmFeminino.Enabled = true;
+                chk_SepararClassesPorVirgula.Enabled = true;
+                chk_ZeroExplicitoParteInteira.Enabled = false;
+                chk_ZeroExplicitoParteDecimal.Enabled = false;
+                chk_ConjuncaoDe.Enabled = false;
+                chk_ConjuncaoExplicitaSeParteInteiraVazia.Enabled = false;
+                txt_Conjuncao.Enabled = false;
+                txt_ParteInteiraSingular.Enabled = false;
+                txt_ParteInteiraPlural.Enabled = false;
+                txt_ParteDecimalSingular.Enabled = true;
+                txt_ParteDecimalPlural.Enabled = false;
+                return TipoNumerais.Ordinais;
             }
             else
             {
                 chk_ExtensoEmFeminino.Enabled = false;
-                chk_ZeroExplicitoAntesDaVirgula.Enabled = false;
-                chk_ZeroExplicitoDepoisDaVirgula.Enabled = false;
+                chk_SepararClassesPorVirgula.Enabled = false;
+                chk_ZeroExplicitoParteInteira.Enabled = false;
+                chk_ZeroExplicitoParteDecimal.Enabled = false;
                 chk_ConjuncaoDe.Enabled = false;
-                txt_Conector.Enabled = false;
-                txt_AntesDaVirgulaSingular.Enabled = false;
-                txt_AntesDaVirgulaPlural.Enabled = false;
-                txt_DepoisDaVirgulaSingular.Enabled = false;
-                txt_DepoisDaVirgulaPlural.Enabled = false;
+                chk_ConjuncaoExplicitaSeParteInteiraVazia.Enabled = false;
+                txt_Conjuncao.Enabled = false;
+                txt_ParteInteiraSingular.Enabled = false;
+                txt_ParteInteiraPlural.Enabled = false;
+                txt_ParteDecimalSingular.Enabled = false;
+                txt_ParteDecimalPlural.Enabled = false;
                 return TipoNumerais.Romanos;
             }
         }
-
     }
 }
