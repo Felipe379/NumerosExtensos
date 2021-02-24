@@ -44,9 +44,6 @@ namespace NumerosExtensos.Tipos.Ordinal
                 numero = Helpers.RemoveZerosAEsquerda(numero);
             }
 
-            while (numero.Count() % 3 != 0)
-                numero = numero.Insert(0, "0");
-
             var arrayDeNumeros = Helpers.ObtemArrayNumerico(numero);
 
             var quantidadeDeCasas = arrayDeNumeros.Count();

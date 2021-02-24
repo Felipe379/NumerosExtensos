@@ -39,7 +39,7 @@ namespace NumerosExtensos.Tipos
 
         public static bool NumeroComecaComZero(string numero) => Regex.IsMatch(numero, @"^([0]{1}[\d]{2})$");
 
-        public static string[] ObtemArrayNumerico(string numero) => Regex.Replace(numero, ".{3}", "$0,")
+        public static string[] ObtemArrayNumerico(string numero) => Regex.Replace(numero, ".{1,3}", "$0,", RegexOptions.RightToLeft)
                                                                          .Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                                                                          .Reverse()
                                                                          .ToArray();
