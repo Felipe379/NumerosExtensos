@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoMonetarioBRLTests
     {
-        private readonly Extenso _extenso = new Extenso(OpcoesPredefinidas.Predefinicoes[Predefinicoes.MonetarioBRL]);
+        private readonly Extenso _extenso = new Extenso();
         public static IEnumerable<object[]> InstanciaParaEscreverValorMonetarioBRLCorretamente => new List<object[]>
         {
             new object[] { "0.00", "ZERO REAL E ZERO CENTAVO" },
@@ -55,7 +55,7 @@ namespace NumerosExtensosTests
         [MemberData(nameof(InstanciaParaEscreverValorMonetarioBRLCorretamente))]
         public void DeveEscreverValorMonetarioBRLCorretamente(string valor, string expected)
         {
-            var actual = _extenso.EscreverNumero(valor).ToUpper();
+            var actual = _extenso.Escrever(OpcoesPredefinidas.Predefinicoes[Predefinicoes.MonetarioBRL]).Numero(valor).ToUpper();
 
             Assert.Equal(expected, actual);
         }

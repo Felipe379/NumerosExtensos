@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace NumerosExtensos.Tipos
+namespace NumerosExtensos.Utils
 {
     internal class Helpers
     {
@@ -11,12 +12,16 @@ namespace NumerosExtensos.Tipos
             if (valor > 9999 || valor < 0)
                 throw new NotSupportedException();
 
-            var valorUnidade = valor % 10;
-            var valorDezena = (valor % 100) - (valor % 10);
-            var valorCentena = (valor % 1000) - (valor % 100);
-            var valorMilhares = valor - (valor % 1000);
+            var quantidadeClasses = 4;
 
-            return new int[] { valorUnidade, valorDezena, valorCentena, valorMilhares };
+            var ordemNumerica = new int[quantidadeClasses];
+
+            for (int i = 0, valorMaximoClasseAtual = 10, classeAnterior = 1; i < quantidadeClasses; i++, classeAnterior = valorMaximoClasseAtual, valorMaximoClasseAtual *= 10)
+            {
+                ordemNumerica[i] = (valor % valorMaximoClasseAtual) - (valor % classeAnterior);
+            }
+
+            return ordemNumerica;
         }
 
         public static string RemoveZerosAEsquerda(string numero)

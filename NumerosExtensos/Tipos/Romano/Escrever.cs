@@ -1,12 +1,17 @@
-﻿using System;
+﻿using NumerosExtensos.Utils;
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace NumerosExtensos.Tipos.Romano
 {
-    internal class Escrever
+    public class Escrever : Escrita
     {
-        public static string Numero(string numero)
+        public Escrever()
+        {
+        }
+
+        public override string Numero(string numero)
         {
             var regex = @"^" +                                            // Inicio
                         @"([0-3]?[0-9]?[0-9]?[0-9]?)" +                   // Valor entre 0 e 3999
@@ -20,7 +25,7 @@ namespace NumerosExtensos.Tipos.Romano
             return numeroEscrito;
         }
 
-        private static string EscreveValor(string numero)
+        private string EscreveValor(string numero)
         {
             int valor = int.Parse(numero);
 
@@ -35,7 +40,7 @@ namespace NumerosExtensos.Tipos.Romano
             return numeroRomano;
         }
 
-        private static string ObtemNumeraisRomanos(int value)
+        private string ObtemNumeraisRomanos(int value)
         {
             var multiplier = 1;
             while (value >= 10)

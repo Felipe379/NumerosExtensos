@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoRomanoTests
     {
-        private readonly Extenso _extenso = new Extenso(OpcoesPredefinidas.Predefinicoes[Predefinicoes.Romanos]);
+        private readonly Extenso _extenso = new Extenso();
         public static IEnumerable<object[]> InstanciaParaEscreverValorOrdinalCorretamente => new List<object[]>
         {
             new object[] { "1", "I" },
@@ -36,7 +36,7 @@ namespace NumerosExtensosTests
         [MemberData(nameof(InstanciaParaEscreverValorOrdinalCorretamente))]
         public void DeveEscreverValorOrdinalCorretamente(string valor, string expected)
         {
-            var actual = _extenso.EscreverNumero(valor);
+            var actual = _extenso.Escrever(OpcoesPredefinidas.Predefinicoes[Predefinicoes.Romanos]).Numero(valor).ToUpper();
 
             Assert.Equal(expected, actual);
         }

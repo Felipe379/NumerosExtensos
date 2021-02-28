@@ -1,19 +1,25 @@
 ﻿using NumerosExtensos.Options.Numerais;
+using NumerosExtensos.Utils;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace NumerosExtensos.Tipos.Ordinal
 {
-    internal class Escrever
+    public class Escrever : Escrita
     {
-        public static string Numero(string numero, NumeraisOptions extensoOptions)
+        public OrdinaisOptions OrdinaisOptions { get; set; }
+
+        public Escrever(NumeraisOptions extensoOptions)
         {
             if (!(extensoOptions is OrdinaisOptions))
                 throw new InvalidOperationException();
 
-            var extenso = extensoOptions as OrdinaisOptions;
+            OrdinaisOptions = extensoOptions as OrdinaisOptions;
+        }
 
+        public override string Numero(string numero)
+        {
             var regex = @"^" +                                            // Inicio
                         @"(?<numeros>[\d]{0,66})" +                       // Pode ou nao ter numeros
                         @"$";                                             // Fim
@@ -21,18 +27,18 @@ namespace NumerosExtensos.Tipos.Ordinal
             if (!Regex.IsMatch(numero, regex))
                 throw new FormatException();
 
-            var numeroEscrito = EscreveValor(numero, extenso.DeveUsarExtensoFeminino, extenso.SepararClassesPorVirgula);
+            var numeroEscrito = EscreveValor(numero);
 
             if (!string.IsNullOrWhiteSpace(numeroEscrito))
-                numeroEscrito += extenso.Singular;
+                numeroEscrito += OrdinaisOptions.Singular;
 
             return Helpers.RemoveEspacosEmBranco(numeroEscrito);
         }
 
-        private static string EscreveValor(string numero, bool extensoFeminino, bool separarClassesPorVirgula)
+        private string EscreveValor(string numero)
         {
             var numeroEscrito = string.Empty;
-            var genero = extensoFeminino ? "a" : "o";
+            var genero = OrdinaisOptions.DeveUsarExtensoFeminino ? "a" : "o";
 
             if (Helpers.NumeroApenasZeros(numero))
             {
@@ -53,7 +59,7 @@ namespace NumerosExtensos.Tipos.Ordinal
                 var valor = int.Parse(arrayDeNumeros[i]);
                 if (valor != 0 || quantidadeDeCasas == 1)
                 {
-                    if (separarClassesPorVirgula && quantidadeDeCasas != i + 1)
+                    if (OrdinaisOptions.SepararClassesPorVirgula && quantidadeDeCasas != i + 1)
                         numeroEscrito += ", ";
 
                     numeroEscrito += valor != 1 || i == 0 ? EscrevePorExtenso(valor, genero) : string.Empty;
@@ -64,7 +70,7 @@ namespace NumerosExtensos.Tipos.Ordinal
             return numeroEscrito;
         }
 
-        private static string EscrevePorExtenso(int valor, string genero)
+        private string EscrevePorExtenso(int valor, string genero)
         {
             var unidadePorExtenso = string.Empty;
             var ordensNumericas = Helpers.ObterOrdemNumerica(valor);

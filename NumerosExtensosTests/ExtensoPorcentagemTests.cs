@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoPorcentagemTests
     {
-        private readonly Extenso _extenso = new Extenso(OpcoesPredefinidas.Predefinicoes[Predefinicoes.Porcentagem]);
+        private readonly Extenso _extenso = new Extenso();
         public static IEnumerable<object[]> InstanciaParaEscreverValorPorcentagemCorretamente => new List<object[]>
         {
             new object[] { "0.00", "ZERO VÍRGULA ZERO ZERO POR CENTO" },
@@ -56,7 +56,7 @@ namespace NumerosExtensosTests
         [MemberData(nameof(InstanciaParaEscreverValorPorcentagemCorretamente))]
         public void DeveEscreverValorPorcentagemCorretamente(string valor, string expected)
         {
-            var actual = _extenso.EscreverNumero(valor).ToUpper();
+            var actual = _extenso.Escrever(OpcoesPredefinidas.Predefinicoes[Predefinicoes.Porcentagem]).Numero(valor).ToUpper();
 
             Assert.Equal(expected, actual);
         }

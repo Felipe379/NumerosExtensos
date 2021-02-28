@@ -60,8 +60,9 @@ namespace Exemplo
 
             try
             {
-                var extenso = new Extenso(extensoOptions);
-                var numeroPorExtenso = extenso.EscreverNumero(txt_Numero.Text.Trim());
+                var extenso = new Extenso();
+                var escrever = extenso.Escrever(extensoOptions);
+                var numeroPorExtenso = escrever.Numero(txt_Numero.Text.Trim());
 
                 if (!string.IsNullOrWhiteSpace(numeroPorExtenso))
                 {
