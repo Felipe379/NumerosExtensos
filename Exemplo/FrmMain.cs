@@ -41,6 +41,7 @@ namespace Exemplo
                     ZeroExplicitoParteDecimal = chk_ZeroExplicitoParteDecimal.Checked,
                     DeveUsarConjuncaoDe = chk_ConjuncaoDe.Checked,
                     ConjuncaoExplicitaSeParteInteiraVazia = chk_ConjuncaoExplicitaSeParteInteiraVazia.Checked,
+                    UmMilExplicito = chk_UmMilExplicito.Checked,
                     ParteInteiraSingular = textInfo.ToTitleCase(txt_ParteInteiraSingular.Text.ToLower().Trim()),
                     ParteInteiraPlural = textInfo.ToTitleCase(txt_ParteInteiraPlural.Text.ToLower().Trim()),
                     Conjuncao = textInfo.ToTitleCase(txt_Conjuncao.Text.ToLower().Trim()),
@@ -99,6 +100,7 @@ namespace Exemplo
                     chk_SepararClassesPorVirgula.Checked = cardinaisOptions.SepararClassesPorVirgula;
                     chk_ConjuncaoDe.Checked = cardinaisOptions.DeveUsarConjuncaoDe;
                     chk_ConjuncaoExplicitaSeParteInteiraVazia.Checked = cardinaisOptions.ConjuncaoExplicitaSeParteInteiraVazia;
+                    chk_UmMilExplicito.Checked = cardinaisOptions.UmMilExplicito;
                     txt_ParteInteiraSingular.Text = cardinaisOptions.ParteInteiraSingular;
                     txt_ParteInteiraPlural.Text = cardinaisOptions.ParteInteiraPlural;
                     txt_Conjuncao.Text = cardinaisOptions.Conjuncao;
@@ -161,6 +163,7 @@ namespace Exemplo
                 chk_ZeroExplicitoParteDecimal.Enabled = true;
                 chk_ConjuncaoDe.Enabled = true;
                 chk_ConjuncaoExplicitaSeParteInteiraVazia.Enabled = true;
+                chk_UmMilExplicito.Enabled = true;
                 txt_Conjuncao.Enabled = true;
                 txt_ParteInteiraSingular.Enabled = true;
                 txt_ParteInteiraPlural.Enabled = true;
@@ -176,6 +179,7 @@ namespace Exemplo
                 chk_ZeroExplicitoParteDecimal.Enabled = false;
                 chk_ConjuncaoDe.Enabled = false;
                 chk_ConjuncaoExplicitaSeParteInteiraVazia.Enabled = false;
+                chk_UmMilExplicito.Enabled = false;
                 txt_Conjuncao.Enabled = false;
                 txt_ParteInteiraSingular.Enabled = false;
                 txt_ParteInteiraPlural.Enabled = false;
@@ -191,6 +195,7 @@ namespace Exemplo
                 chk_ZeroExplicitoParteDecimal.Enabled = false;
                 chk_ConjuncaoDe.Enabled = false;
                 chk_ConjuncaoExplicitaSeParteInteiraVazia.Enabled = false;
+                chk_UmMilExplicito.Enabled = false;
                 txt_Conjuncao.Enabled = false;
                 txt_ParteInteiraSingular.Enabled = false;
                 txt_ParteInteiraPlural.Enabled = false;

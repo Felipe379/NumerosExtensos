@@ -122,7 +122,9 @@ namespace NumerosExtensos.Tipos.Cardinal
                     else if (CardinaisOptions.SepararClassesPorVirgula && quantidadeDeCasas != i + 1)
                         numeroEscrito += ", ";
 
-                    numeroEscrito += (CardinaisOptions.DeveUsarExtensoFeminino && i < 2) ? EscrevePorExtenso(valor, Nomenclatura.NumerosFeminino) : EscrevePorExtenso(valor, Nomenclatura.NumerosMasculino);
+                    numeroEscrito += (valor == 1 && i == 1 && !CardinaisOptions.UmMilExplicito) ? string.Empty : CardinaisOptions.DeveUsarExtensoFeminino 
+                        ? EscrevePorExtenso(valor, Nomenclatura.NumerosFeminino) 
+                        : EscrevePorExtenso(valor, Nomenclatura.NumerosMasculino);
                     numeroEscrito += i < 2 ? $" {Nomenclatura.Classes[i]}" : valor == 1 ? $" {Nomenclatura.Classes[i]}ão" : $" {Nomenclatura.Classes[i]}ões";
                 }
             }

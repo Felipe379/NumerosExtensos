@@ -12,10 +12,13 @@
     <PackageReleaseNotes>V2.0.0
 - Atualiza as configurações de opções para utilizarem herança;
 - Renomeia nome das propriedades das opções;
+- Correção do flexionamento em feminino nos cardinais;
 - Alterações internas;
+- Alterações de algumas opções predefinidas;
 - Novas opções de configurações:
--- NumeraisOptions: SepararClassesPorVirgula (bool)
--- CardinaisOptions: ConjuncaoExplicitaSeParteInteiraVazia (bool)</PackageReleaseNotes>
+-- NumeraisOptions: SepararClassesPorVirgula (bool);
+-- CardinaisOptions: ConjuncaoExplicitaSeParteInteiraVazia (bool);
+-- CaridnaisOptions: UmMilExplicito (bool);</PackageReleaseNotes>
     <PackageTags>Números;Número;Extensos;Extenso;Escrita;Escrever;</PackageTags>
     <RepositoryType></RepositoryType>
   </PropertyGroup>

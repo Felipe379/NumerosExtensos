@@ -51,6 +51,7 @@
             this.cbo_Casing = new System.Windows.Forms.ComboBox();
             this.cbo_Tipo = new System.Windows.Forms.ComboBox();
             this.chk_ConjuncaoExplicitaSeParteInteiraVazia = new System.Windows.Forms.CheckBox();
+            this.chk_UmMilExplicito = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btn_Escrever
@@ -283,11 +284,23 @@
             this.chk_ConjuncaoExplicitaSeParteInteiraVazia.Text = "Conjunção explícitao se parte inteira vazia";
             this.chk_ConjuncaoExplicitaSeParteInteiraVazia.UseVisualStyleBackColor = true;
             // 
+            // chk_UmMilExplicito
+            // 
+            this.chk_UmMilExplicito.AutoSize = true;
+            this.chk_UmMilExplicito.Location = new System.Drawing.Point(518, 234);
+            this.chk_UmMilExplicito.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.chk_UmMilExplicito.Name = "chk_UmMilExplicito";
+            this.chk_UmMilExplicito.Size = new System.Drawing.Size(165, 19);
+            this.chk_UmMilExplicito.TabIndex = 20;
+            this.chk_UmMilExplicito.Text = "Escreve \"Um mil\" explícito";
+            this.chk_UmMilExplicito.UseVisualStyleBackColor = true;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(822, 442);
+            this.Controls.Add(this.chk_UmMilExplicito);
             this.Controls.Add(this.chk_ConjuncaoExplicitaSeParteInteiraVazia);
             this.Controls.Add(this.cbo_Tipo);
             this.Controls.Add(this.cbo_Casing);
@@ -346,6 +359,7 @@
         private System.Windows.Forms.ComboBox cbo_Casing;
         private System.Windows.Forms.ComboBox cbo_Tipo;
         private System.Windows.Forms.CheckBox chk_ConjuncaoExplicitaSeParteInteiraVazia;
+        private System.Windows.Forms.CheckBox chk_UmMilExplicito;
     }
 }
 
