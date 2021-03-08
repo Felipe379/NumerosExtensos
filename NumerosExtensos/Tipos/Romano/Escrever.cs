@@ -13,11 +13,13 @@ namespace NumerosExtensos.Tipos.Romano
 
         public override string Numero(string numero)
         {
-            var regex = @"^" +                                            // Inicio
-                        @"([0-3]?[0-9]?[0-9]?[0-9]?)" +                   // Valor entre 0 e 3999
-                        @"$";                                             // Fim
+            var pattern = @"^" +                                            // Inicio
+                          @"([0-3]?[0-9]?[0-9]?[0-9]?)" +                   // Valor entre 0 e 3999
+                          @"$";                                             // Fim
 
-            if (!Regex.IsMatch(numero, regex) || Helpers.NumeroApenasZeros(numero))
+            var regex = new Regex(pattern).Match(numero);
+
+            if (!regex.Success || Helpers.NumeroApenasZeros(numero))
                 throw new FormatException();
 
             var numeroEscrito = EscreveValor(numero);

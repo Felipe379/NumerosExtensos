@@ -7,6 +7,7 @@
     {
         /// <summary>
         /// Define o que deve ser escrito após o valor.
+        /// <br />
         /// Exemplo: 15 -> Décimo quinto COLOCADO.
         /// </summary>
         public string Singular { get; set; }

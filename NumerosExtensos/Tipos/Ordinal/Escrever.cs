@@ -20,11 +20,13 @@ namespace NumerosExtensos.Tipos.Ordinal
 
         public override string Numero(string numero)
         {
-            var regex = @"^" +                                            // Inicio
-                        @"(?<numeros>[\d]{0,66})" +                       // Pode ou nao ter numeros
-                        @"$";                                             // Fim
+            var pattern = @"^" +                                            // Inicio
+                          @"(?<numeros>[\d]{0,66})" +                       // Pode ou nao ter numeros
+                          @"$";                                             // Fim
 
-            if (!Regex.IsMatch(numero, regex))
+            var regex = new Regex(pattern).Match(numero);
+
+            if (!regex.Success)
                 throw new FormatException();
 
             var numeroEscrito = EscreveValor(numero);

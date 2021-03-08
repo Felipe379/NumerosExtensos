@@ -21,21 +21,22 @@ namespace NumerosExtensos.Tipos.Cardinal
 
         public override string Numero(string numero)
         {
-            var regex = @"^" +                                         // Inicio
-                        @"(?<sinal>(\+|-)?)" +                         // Pode ou nao ter sinal
-                        @"(?<numeroParteInteira>[\d]{0,66})" +         // Pode ou nao ter numeros antes da virgula
-                        @"(?<temVirgula>(,|\.)?)" +                    // Pode ou nao ter virgula
-                        @"(?<numeroParteDecimal>[\d]{0,66})" +         // Pode ou nao ter numeros depois da virgula
-                        @"$";                                          // Fim
+            var pattern = @"^" +                                         // Inicio
+                          @"(?<sinal>(\+|-)?)" +                         // Pode ou nao ter sinal
+                          @"(?<numeroParteInteira>[\d]{0,66})" +         // Pode ou nao ter numeros antes da virgula
+                          @"(?<temVirgula>(,|\.)?)" +                    // Pode ou nao ter virgula
+                          @"(?<numeroParteDecimal>[\d]{0,66})" +         // Pode ou nao ter numeros depois da virgula
+                          @"$";                                          // Fim
 
-            if (!Regex.IsMatch(numero, regex))
+            var regex = new Regex(pattern).Match(numero);
+
+            if (!regex.Success)
                 throw new FormatException();
 
-            var token = new Regex(regex).Match(numero);
-            var sinal = token.Groups["sinal"].ToString();
-            var virgula = token.Groups["temVirgula"].ToString();
-            var numeroParteInteira = token.Groups["numeroParteInteira"].ToString();
-            var numeroParteDecimal = token.Groups["numeroParteDecimal"].ToString();
+            var sinal = regex.Groups["sinal"].ToString();
+            var virgula = regex.Groups["temVirgula"].ToString();
+            var numeroParteInteira = regex.Groups["numeroParteInteira"].ToString();
+            var numeroParteDecimal = regex.Groups["numeroParteDecimal"].ToString();
 
             if (string.IsNullOrWhiteSpace(virgula) && !string.IsNullOrWhiteSpace(numeroParteDecimal))
                 throw new FormatException();
