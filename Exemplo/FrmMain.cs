@@ -23,7 +23,7 @@ namespace Exemplo
             cbo_Presets.SelectedIndex = 0;
         }
 
-        private void btn_Escrever_Click(object sender, EventArgs e)
+        private void BtnEscrever_Click(object sender, EventArgs e)
         {
             var textInfo = CultureInfo.CurrentCulture.TextInfo;
             var extensoOptions = new ExtensoOptions
@@ -83,7 +83,7 @@ namespace Exemplo
             }
         }
 
-        private void cbo_Presets_SelectedIndexChanged(object sender, EventArgs e)
+        private void CboPresets_SelectedIndexChanged(object sender, EventArgs e)
         {
             var tipoPredefinicao = ObtemTipoPreset(cbo_Presets.SelectedIndex);
 
@@ -148,7 +148,7 @@ namespace Exemplo
             };
         }
 
-        private void cbo_Tipos_SelectedIndexChanged(object sender, EventArgs e)
+        private void CboTipos_SelectedIndexChanged(object sender, EventArgs e)
         {
             ObtemTipoNumeral();
         }

@@ -1,24 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Authors>Felipe de Camargo</Authors>
     <Description>Pacote que permite escrever os numerais da língua portuguesa (PT-BR) por extenso.</Description>
     <PackageId>NumerosExtensos</PackageId>
     <Copyright>Copyright © 2020 Felipe de Camargo</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/Felipe379/NumerosExtensos/</RepositoryUrl>
-    <Version>2.0.0</Version>
-    <PackageReleaseNotes>V2.0.0
-- Atualiza as configurações de opções para utilizarem herança;
-- Renomeia nome das propriedades das opções;
-- Correção do flexionamento em feminino nos cardinais;
-- Alterações internas;
-- Alterações de algumas opções predefinidas;
-- Novas opções de configurações:
--- NumeraisOptions: SepararClassesPorVirgula (bool);
--- CardinaisOptions: ConjuncaoExplicitaSeParteInteiraVazia (bool);
--- CaridnaisOptions: UmMilExplicito (bool);</PackageReleaseNotes>
+    <Version>2.0.1</Version>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <PackageTags>Números;Número;Extensos;Extenso;Escrita;Escrever;</PackageTags>
     <RepositoryType></RepositoryType>
   </PropertyGroup>

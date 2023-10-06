@@ -16,16 +16,23 @@ namespace NumerosExtensos
         /// <param name="extenso">Opções prédefinidas que devem ser passadas para retornar o tipo de numeral que deverá ser escrito.</param>
         public Escrita Escrever(ExtensoOptions extenso)
         {
-            return extenso.Tipo switch
+            switch (extenso.Tipo)
             {
-                TipoNumerais.Cardinais => new Tipos.Cardinal.Escrever(extenso.NumeraisOptions),
-                TipoNumerais.Ordinais => new Tipos.Ordinal.Escrever(extenso.NumeraisOptions),
-                TipoNumerais.Multiplicativos => throw new NotSupportedException(),
-                TipoNumerais.Fracionarios => throw new NotSupportedException(),
-                TipoNumerais.Coletivos => throw new NotSupportedException(),
-                TipoNumerais.Romanos => new Tipos.Romano.Escrever(),
-                _ => throw new NotSupportedException()
-            };
+                case TipoNumerais.Cardinais:
+                    return new Tipos.Cardinal.Escrever(extenso.NumeraisOptions);
+                case TipoNumerais.Ordinais:
+                    return new Tipos.Ordinal.Escrever(extenso.NumeraisOptions);
+                case TipoNumerais.Multiplicativos:
+                    throw new NotSupportedException();
+                case TipoNumerais.Fracionarios:
+                    throw new NotSupportedException();
+                case TipoNumerais.Coletivos:
+                    throw new NotSupportedException();
+                case TipoNumerais.Romanos:
+                    return new Tipos.Romano.Escrever();
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

@@ -71,7 +71,7 @@
         /// <summary>
         /// Define o que deve ser escrito após o valor decimal caso este esteja no plural.
         /// <br />
-        /// Exemplo: 1.11 -> Um real vírgula onze CENTAVOs.
+        /// Exemplo: 1.11 -> Um real vírgula onze CENTAVOS.
         /// </summary>
         public string ParteDecimalPlural { get; set; }
     }
