@@ -1,7 +1,6 @@
 ﻿using NumerosExtensos.Options.Numerais;
 using NumerosExtensos.Utils;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -10,6 +9,7 @@ namespace NumerosExtensos.Tipos.Cardinal
     public class Escrever : Escrita
     {
         public CardinaisOptions CardinaisOptions { get; set; }
+        private Nomenclatura Nomenclatura { get; set; }
 
         public Escrever(NumeraisOptions extensoOptions)
         {
@@ -17,6 +17,7 @@ namespace NumerosExtensos.Tipos.Cardinal
                 throw new InvalidOperationException();
 
             CardinaisOptions = extensoOptions as CardinaisOptions;
+            Nomenclatura = new Nomenclatura(CardinaisOptions.DeveUsarExtensoFeminino);
         }
 
         public override string Numero(string numero)
@@ -95,13 +96,13 @@ namespace NumerosExtensos.Tipos.Cardinal
                 var index = 0;
 
                 for (; index < numero.Length && numero[index] == '0'; index++)
-                    numeroEscrito += EscrevePorExtenso(0, Nomenclatura.NumerosMasculino);
+                    numeroEscrito += EscrevePorExtenso(0);
 
                 numero = numero.Substring(index);
             }
             else if (Helpers.NumeroApenasZeros(numero))
             {
-                numeroEscrito += EscrevePorExtenso(0, Nomenclatura.NumerosMasculino);
+                numeroEscrito += EscrevePorExtenso(0);
                 return numeroEscrito;
             }
             else
@@ -123,9 +124,7 @@ namespace NumerosExtensos.Tipos.Cardinal
                     else if (CardinaisOptions.SepararClassesPorVirgula && quantidadeDeCasas != i + 1)
                         numeroEscrito += ", ";
 
-                    numeroEscrito += (valor == 1 && i == 1 && !CardinaisOptions.UmMilExplicito) ? string.Empty : CardinaisOptions.DeveUsarExtensoFeminino 
-                        ? EscrevePorExtenso(valor, Nomenclatura.NumerosFeminino) 
-                        : EscrevePorExtenso(valor, Nomenclatura.NumerosMasculino);
+                    numeroEscrito += (valor == 1 && i == 1 && !CardinaisOptions.UmMilExplicito) ? string.Empty : EscrevePorExtenso(valor);
                     numeroEscrito += i < 2 ? $" {Nomenclatura.Classes[i]}" : valor == 1 ? $" {Nomenclatura.Classes[i]}ão" : $" {Nomenclatura.Classes[i]}ões";
                 }
             }
@@ -138,7 +137,7 @@ namespace NumerosExtensos.Tipos.Cardinal
             return numeroEscrito;
         }
 
-        private string EscrevePorExtenso(int valor, Dictionary<int, string> valorPorExtenso)
+        private string EscrevePorExtenso(int valor)
         {
             var unidadePorExtenso = string.Empty;
             var ordensNumericas = Helpers.ObterOrdemNumerica(valor);
@@ -149,22 +148,22 @@ namespace NumerosExtensos.Tipos.Cardinal
             if (valorCentena > 0)
             {
                 if (valorCentena == valor)
-                    return valorCentena == 100 ? $" {valorPorExtenso[valorCentena * -1]}" : $" {valorPorExtenso[valorCentena]}";
+                    return valorCentena == 100 ? $" {Nomenclatura.Numeros[valorCentena * -1]}" : $" {Nomenclatura.Numeros[valorCentena]}";
                 else
-                    unidadePorExtenso += $" {valorPorExtenso[valorCentena]} E ";
+                    unidadePorExtenso += $" {Nomenclatura.Numeros[valorCentena]} E ";
             }
 
             if (valorDezena > 0)
             {
                 if (valorDezena == valorDezena + valorUnidade)
-                    return unidadePorExtenso += $" {valorPorExtenso[valorDezena]}";
+                    return unidadePorExtenso += $" {Nomenclatura.Numeros[valorDezena]}";
                 else if (valorDezena == 10)
-                    return unidadePorExtenso += $" {valorPorExtenso[valorDezena + valorUnidade]}";
+                    return unidadePorExtenso += $" {Nomenclatura.Numeros[valorDezena + valorUnidade]}";
                 else if (valorDezena != 0)
-                    unidadePorExtenso += $" {valorPorExtenso[valorDezena]} E ";
+                    unidadePorExtenso += $" {Nomenclatura.Numeros[valorDezena]} E ";
             }
 
-            unidadePorExtenso += $" {valorPorExtenso[valorUnidade]}";
+            unidadePorExtenso += $" {Nomenclatura.Numeros[valorUnidade]}";
 
             return unidadePorExtenso;
         }
