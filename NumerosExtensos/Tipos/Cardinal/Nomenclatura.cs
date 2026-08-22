@@ -107,7 +107,7 @@ namespace NumerosExtensos.Tipos.Cardinal
             { 5, "Quadrilh" },
             { 6, "Quintilh" },
             { 7, "Sextilh" },
-            { 8, "Setilh"},
+            { 8, "Septilh"},
             { 9,  "Octilh" },
             { 10, "Nonilh" },
             { 11, "Decilh" },

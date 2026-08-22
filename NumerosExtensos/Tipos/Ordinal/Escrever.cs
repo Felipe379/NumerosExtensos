@@ -1,30 +1,31 @@
 ﻿using NumerosExtensos.Options.Numerais;
 using NumerosExtensos.Utils;
 using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace NumerosExtensos.Tipos.Ordinal
 {
     public class Escrever : Escrita
     {
+        private static readonly Regex _pattern = new Regex(@"
+            ^                       # Início
+            (?<numeros>[\d]{0,66})  # Pode ou não ter números
+            $                       # Fim
+        ", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
+
         public OrdinaisOptions OrdinaisOptions { get; set; }
 
         public Escrever(NumeraisOptions extensoOptions)
         {
-            if (!(extensoOptions is OrdinaisOptions))
+            if (!(extensoOptions is OrdinaisOptions ordinaisOpts))
                 throw new InvalidOperationException();
 
-            OrdinaisOptions = extensoOptions as OrdinaisOptions;
+            OrdinaisOptions = ordinaisOpts;
         }
 
         public override string Numero(string numero)
         {
-            var pattern = @"^" +                                            // Inicio
-                          @"(?<numeros>[\d]{0,66})" +                       // Pode ou nao ter numeros
-                          @"$";                                             // Fim
-
-            var regex = new Regex(pattern).Match(numero);
+            var regex = _pattern.Match(numero);
 
             if (!regex.Success)
                 throw new FormatException();
@@ -54,7 +55,7 @@ namespace NumerosExtensos.Tipos.Ordinal
 
             var arrayDeNumeros = Helpers.ObtemArrayNumerico(numero);
 
-            var quantidadeDeCasas = arrayDeNumeros.Count();
+            var quantidadeDeCasas = arrayDeNumeros.Length;
 
             for (int i = quantidadeDeCasas - 1; i >= 0; i--)
             {

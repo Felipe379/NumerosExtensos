@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoPorcentagemTests
     {
-        private readonly Extenso _extenso = new Extenso();
+        private readonly Extenso _extenso = new();
         public static IEnumerable<object[]> InstanciaParaEscreverValorPorcentagemCorretamente => new List<object[]>
         {
             new object[] { "0.00", "ZERO VÍRGULA ZERO ZERO POR CENTO" },

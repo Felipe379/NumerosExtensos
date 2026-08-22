@@ -1,4 +1,11 @@
 # Change Log
+
+#### v2.1.1 - 2026-08-22
+- Correções de nomenclatura nos cardinais e ordinais;
+- Correções no overload de tipos numéricos;
+- Correções nos summaries;
+- Alterações internas;
+
 #### v2.1.0 - 2023-10-06
 - Altera target framework para netstandard2.0;
 - Alterações internas;

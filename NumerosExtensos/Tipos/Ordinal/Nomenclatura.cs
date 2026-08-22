@@ -31,7 +31,7 @@ namespace NumerosExtensos.Tipos.Ordinal
             { 400, "Quadrigentésim" },
             { 500, "Quingentésim" },
             { 600, "Sexcentésim" },
-            { 700, "Septlingentésim" },
+            { 700, "Septingentésim" },
             { 800, "Octigentésim" },
             { 900, "Nonigentésim" },
         };
@@ -52,7 +52,7 @@ namespace NumerosExtensos.Tipos.Ordinal
             { 11, "Decilionésim" },
             { 12, "Undecilionésim" },
             { 13, "Duodecilionésim" },
-            { 14, "Tredecilionésimo" },
+            { 14, "Tredecilionésim" },
             { 15, "Quatuordecilionésim" },
             { 16, "Quindecilionésim" },
             { 17, "Sexdecilionésim" },

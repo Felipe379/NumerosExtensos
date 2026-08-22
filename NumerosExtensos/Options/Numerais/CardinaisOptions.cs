@@ -27,7 +27,7 @@
         public bool ZeroExplicitoParteDecimal { get; set; }
 
         /// <summary>
-        /// Define se deve escrever o valor que foi definido em "Conjuncao" mesmo que a parte inteira esteja vazia.
+        /// Define se deve escrever o valor que foi definido em "Conjunção" mesmo que a parte inteira esteja vazia.
         /// <br />
         /// Exemplo: .21 -> VÍRGULA vinte e um.
         /// </summary>

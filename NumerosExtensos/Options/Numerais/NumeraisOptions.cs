@@ -1,7 +1,7 @@
 ﻿namespace NumerosExtensos.Options.Numerais
 {
     /// <summary>
-    /// Opções que valem tanto para os números cardinais quantos os ordinais.
+    /// Opções que valem tanto para os números cardinais quanto os ordinais.
     /// </summary>
     public class NumeraisOptions
     {
@@ -11,7 +11,7 @@
         /// Exemplo Cardinal: 2000 -> DUAS mil.
         /// <br />
         /// Exemplo Ordinal: 10 -> DÉCIMA.
-        /// </summary
+        /// </summary>
         public bool DeveUsarExtensoFeminino { get; set; }
 
         /// <summary>
@@ -20,7 +20,7 @@
         /// Exemplo Cardinal: 1537 -> Mil, quinhentos e trinta e sete
         /// <br />
         /// Exemplo Ordinal: 210115 -> Ducentésimo décimo milésimo, centésimo décimo quinto.
-        /// </summary
+        /// </summary>
         public bool SepararClassesPorVirgula { get; set; }
     }
 }

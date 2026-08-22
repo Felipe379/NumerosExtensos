@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoCardinalTests
     {
-        private readonly Extenso _extenso = new Extenso();
+        private readonly Extenso _extenso = new();
         public static IEnumerable<object[]> InstanciaParaEscreverValorCardinalCorretamente => new List<object[]>
         {
             new object[] { "0.00", "ZERO VÍRGULA ZERO ZERO" },
@@ -55,7 +55,7 @@ namespace NumerosExtensosTests
 
         [Theory]
         [MemberData(nameof(InstanciaParaEscreverValorCardinalCorretamente))]
-        public void DeveEscreverValorCadinalCorretamente(string valor, string expected)
+        public void DeveEscreverValorCardinalCorretamente(string valor, string expected)
         {
             var actual = _extenso.Escrever(OpcoesPredefinidas.Predefinicoes[Predefinicoes.Cardinais]).Numero(valor).ToUpper();
 

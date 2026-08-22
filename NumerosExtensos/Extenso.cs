@@ -13,7 +13,7 @@ namespace NumerosExtensos
         /// <summary>
         /// Método para instanciar uma classe do tipo de numeral definido.
         /// </summary>
-        /// <param name="extenso">Opções prédefinidas que devem ser passadas para retornar o tipo de numeral que deverá ser escrito.</param>
+        /// <param name="extenso">Opções predefinidas que devem ser passadas para retornar o tipo de numeral que deverá ser escrito.</param>
         public Escrita Escrever(ExtensoOptions extenso)
         {
             switch (extenso.Tipo)

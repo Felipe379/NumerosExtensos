@@ -1,10 +1,10 @@
-﻿using NumerosExtensos.Enums;
-using NumerosExtensos.Options.Numerais;
+﻿using NumerosExtensos;
+using NumerosExtensos.Enums;
 using NumerosExtensos.Options;
-using NumerosExtensos;
+using NumerosExtensos.Options.Numerais;
+using System;
 using System.Globalization;
 using System.Windows.Forms;
-using System;
 
 namespace Exemplo
 {
@@ -134,7 +134,7 @@ namespace Exemplo
             }
         }
 
-        private Predefinicoes ObtemTipoPreset(int cboIndex)
+        private static Predefinicoes ObtemTipoPreset(int cboIndex)
         {
             return cboIndex switch
             {

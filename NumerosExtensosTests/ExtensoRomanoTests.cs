@@ -7,7 +7,7 @@ namespace NumerosExtensosTests
 {
     public class ExtensoRomanoTests
     {
-        private readonly Extenso _extenso = new Extenso();
+        private readonly Extenso _extenso = new();
         public static IEnumerable<object[]> InstanciaParaEscreverValorOrdinalCorretamente => new List<object[]>
         {
             new object[] { "1", "I" },

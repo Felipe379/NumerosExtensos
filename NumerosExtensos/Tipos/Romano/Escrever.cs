@@ -7,17 +7,19 @@ namespace NumerosExtensos.Tipos.Romano
 {
     public class Escrever : Escrita
     {
+        private static readonly Regex _pattern = new Regex(@"
+            ^                             # Início
+            ([0-3]?[0-9]?[0-9]?[0-9]?)    # Valor entre 0 e 3999
+            $                             # Fim
+        ", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
+
         public Escrever()
         {
         }
 
         public override string Numero(string numero)
         {
-            var pattern = @"^" +                                            // Inicio
-                          @"([0-3]?[0-9]?[0-9]?[0-9]?)" +                   // Valor entre 0 e 3999
-                          @"$";                                             // Fim
-
-            var regex = new Regex(pattern).Match(numero);
+            var regex = _pattern.Match(numero);
 
             if (!regex.Success || Helpers.NumeroApenasZeros(numero))
                 throw new FormatException();

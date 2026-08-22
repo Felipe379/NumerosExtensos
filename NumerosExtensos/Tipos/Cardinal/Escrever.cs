@@ -1,35 +1,36 @@
 ﻿using NumerosExtensos.Options.Numerais;
 using NumerosExtensos.Utils;
 using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace NumerosExtensos.Tipos.Cardinal
 {
     public class Escrever : Escrita
     {
+        private static readonly Regex _pattern = new Regex(@"
+            ^                                        # Início
+            (?<sinal>(\+|-)?)                        # Pode ou não ter sinal
+            (?<numeroParteInteira>[\d]{0,66})        # Pode ou não ter números antes da vírgula
+            (?<temVirgula>(,|\.)?)                   # Pode ou não ter vírgula
+            (?<numeroParteDecimal>[\d]{0,66})        # Pode ou não ter números depois da vírgula
+            $                                        # Fim
+        ", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
+
         public CardinaisOptions CardinaisOptions { get; set; }
         private Nomenclatura Nomenclatura { get; set; }
 
         public Escrever(NumeraisOptions extensoOptions)
         {
-            if (!(extensoOptions is CardinaisOptions))
+            if (!(extensoOptions is CardinaisOptions cardinaisOpts))
                 throw new InvalidOperationException();
 
-            CardinaisOptions = extensoOptions as CardinaisOptions;
+            CardinaisOptions = cardinaisOpts;
             Nomenclatura = new Nomenclatura(CardinaisOptions.DeveUsarExtensoFeminino);
         }
 
         public override string Numero(string numero)
         {
-            var pattern = @"^" +                                         // Inicio
-                          @"(?<sinal>(\+|-)?)" +                         // Pode ou nao ter sinal
-                          @"(?<numeroParteInteira>[\d]{0,66})" +         // Pode ou nao ter numeros antes da virgula
-                          @"(?<temVirgula>(,|\.)?)" +                    // Pode ou nao ter virgula
-                          @"(?<numeroParteDecimal>[\d]{0,66})" +         // Pode ou nao ter numeros depois da virgula
-                          @"$";                                          // Fim
-
-            var regex = new Regex(pattern).Match(numero);
+            var regex = _pattern.Match(numero);
 
             if (!regex.Success)
                 throw new FormatException();
@@ -112,7 +113,7 @@ namespace NumerosExtensos.Tipos.Cardinal
 
             var arrayDeNumeros = Helpers.ObtemArrayNumerico(numero);
 
-            var quantidadeDeCasas = arrayDeNumeros.Count();
+            var quantidadeDeCasas = arrayDeNumeros.Length;
 
             for (int i = quantidadeDeCasas - 1; i >= 0; i--)
             {
