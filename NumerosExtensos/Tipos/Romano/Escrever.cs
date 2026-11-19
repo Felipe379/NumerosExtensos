@@ -5,6 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace NumerosExtensos.Tipos.Romano
 {
+    /// <summary>
+    /// Escrita dos números romanos, aceitando valores entre 1 e 3999.
+    /// </summary>
     public class Escrever : Escrita
     {
         private static readonly Regex _pattern = new Regex(@"
@@ -13,10 +16,14 @@ namespace NumerosExtensos.Tipos.Romano
             $                             # Fim
         ", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
 
+        /// <summary>
+        /// Instancia a escrita dos números romanos.
+        /// </summary>
         public Escrever()
         {
         }
 
+        /// <inheritdoc/>
         public override string Numero(string numero)
         {
             var regex = _pattern.Match(numero);
@@ -44,7 +51,7 @@ namespace NumerosExtensos.Tipos.Romano
             return numeroRomano;
         }
 
-        private string ObtemNumeraisRomanos(int value)
+        private static string ObtemNumeraisRomanos(int value)
         {
             var multiplier = 1;
             while (value >= 10)

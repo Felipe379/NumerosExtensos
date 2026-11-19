@@ -5,24 +5,36 @@ using System.Text.RegularExpressions;
 
 namespace NumerosExtensos.Tipos.Ordinal
 {
+    /// <summary>
+    /// Escrita dos números ordinais por extenso.
+    /// </summary>
     public class Escrever : Escrita
     {
         private static readonly Regex _pattern = new Regex(@"
             ^                       # Início
-            (?<numeros>[\d]{0,66})  # Pode ou não ter números
+            (?<numeros>[\d]{1,66})  # Deve ter ao menos um número
             $                       # Fim
         ", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
 
+        /// <summary>
+        /// Opções utilizadas na escrita dos números ordinais.
+        /// </summary>
         public OrdinaisOptions OrdinaisOptions { get; set; }
 
+        /// <summary>
+        /// Instancia a escrita dos números ordinais.
+        /// </summary>
+        /// <param name="extensoOptions">Opções do tipo <see cref="Options.Numerais.OrdinaisOptions"/>.</param>
+        /// <exception cref="InvalidOperationException">Quando as opções não forem do tipo <see cref="Options.Numerais.OrdinaisOptions"/>.</exception>
         public Escrever(NumeraisOptions extensoOptions)
         {
             if (!(extensoOptions is OrdinaisOptions ordinaisOpts))
-                throw new InvalidOperationException();
+                throw new InvalidOperationException($"Para o tipo de numeral Ordinais, a propriedade 'NumeraisOptions' deve ser do tipo '{nameof(OrdinaisOptions)}'");
 
             OrdinaisOptions = ordinaisOpts;
         }
 
+        /// <inheritdoc/>
         public override string Numero(string numero)
         {
             var regex = _pattern.Match(numero);
@@ -33,7 +45,7 @@ namespace NumerosExtensos.Tipos.Ordinal
             var numeroEscrito = EscreveValor(numero);
 
             if (!string.IsNullOrWhiteSpace(numeroEscrito))
-                numeroEscrito += OrdinaisOptions.Singular;
+                numeroEscrito += $" {OrdinaisOptions.Singular}";
 
             return Helpers.RemoveEspacosEmBranco(numeroEscrito);
         }

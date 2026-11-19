@@ -14,13 +14,9 @@ namespace Exemplo
         {
             InitializeComponent();
 
-            cbo_Casing.Items.AddRange(new[] { "Uppercase", "Lowercase", "Frase", "Pascalcase" });
-            cbo_Tipo.Items.AddRange(new[] { "Cardinal", "Ordinal", "Romano" });
-            cbo_Presets.Items.AddRange(new[] { "Nenhum", "Números Cardinais", "Números Ordinais", "Números Romanos", "Monetário BRL", "Porcentagem", "Metros" });
-
-            cbo_Casing.SelectedIndex = 0;
-            cbo_Tipo.SelectedIndex = 0;
-            cbo_Presets.SelectedIndex = 0;
+            cbo_Casing.PreencherCom<Casing>();
+            cbo_Tipo.PreencherCom(TipoNumerais.Cardinais, TipoNumerais.Ordinais, TipoNumerais.Romanos);
+            cbo_Presets.PreencherCom<Predefinicoes>();
         }
 
         private void BtnEscrever_Click(object sender, EventArgs e)
@@ -28,7 +24,7 @@ namespace Exemplo
             var textInfo = CultureInfo.CurrentCulture.TextInfo;
             var extensoOptions = new ExtensoOptions
             {
-                Tipo = ObtemTipoNumeral(),
+                Tipo = cbo_Tipo.SelectedItem is TipoNumerais tipo ? tipo : TipoNumerais.Cardinais,
             };
 
             if (extensoOptions.Tipo == TipoNumerais.Cardinais)
@@ -65,14 +61,15 @@ namespace Exemplo
                 var escrever = extenso.Escrever(extensoOptions);
                 var numeroPorExtenso = escrever.Numero(txt_Numero.Text.Trim());
 
-                if (!string.IsNullOrWhiteSpace(numeroPorExtenso))
+                if (!string.IsNullOrWhiteSpace(numeroPorExtenso) && cbo_Casing.SelectedItem is Casing casing)
                 {
-                    if (cbo_Casing.SelectedIndex == 0)
-                        numeroPorExtenso = numeroPorExtenso.ToUpper();
-                    else if (cbo_Casing.SelectedIndex == 1)
-                        numeroPorExtenso = numeroPorExtenso.ToLower();
-                    else if (cbo_Casing.SelectedIndex == 2)
-                        numeroPorExtenso = char.ToUpperInvariant(numeroPorExtenso[0]) + numeroPorExtenso.Substring(1).ToLower();
+                    numeroPorExtenso = casing switch
+                    {
+                        Casing.Uppercase => numeroPorExtenso.ToUpper(),
+                        Casing.Lowercase => numeroPorExtenso.ToLower(),
+                        Casing.Frase => char.ToUpperInvariant(numeroPorExtenso[0]) + numeroPorExtenso.Substring(1).ToLower(),
+                        _ => numeroPorExtenso // Pascalcase: o Escrever já devolve nesse formato
+                    };
                 }
 
                 txt_NumeroPorExtenso.Text = numeroPorExtenso;
@@ -85,15 +82,16 @@ namespace Exemplo
 
         private void CboPresets_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var tipoPredefinicao = ObtemTipoPreset(cbo_Presets.SelectedIndex);
+            if (cbo_Presets.SelectedItem is not Predefinicoes tipoPredefinicao)
+                return;
 
-            if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].Tipo == TipoNumerais.Cardinais)
+            var predefinicao = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao];
+
+            if (predefinicao.Tipo == TipoNumerais.Cardinais)
             {
-                if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].NumeraisOptions is CardinaisOptions)
+                if (predefinicao.NumeraisOptions is CardinaisOptions cardinaisOptions)
                 {
-                    var cardinaisOptions = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].NumeraisOptions as CardinaisOptions;
-
-                    cbo_Tipo.SelectedIndex = 0;
+                    cbo_Tipo.SelectedItem = TipoNumerais.Cardinais;
                     chk_ExtensoEmFeminino.Checked = cardinaisOptions.DeveUsarExtensoFeminino;
                     chk_ZeroExplicitoParteInteira.Checked = cardinaisOptions.ZeroExplicitoParteInteira;
                     chk_ZeroExplicitoParteDecimal.Checked = cardinaisOptions.ZeroExplicitoParteDecimal;
@@ -112,13 +110,11 @@ namespace Exemplo
                     txt_NumeroPorExtenso.Text = "NumeraisOptions não é um objeto do tipo esperado.";
                 }
             }
-            else if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].Tipo == TipoNumerais.Ordinais)
+            else if (predefinicao.Tipo == TipoNumerais.Ordinais)
             {
-                if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].NumeraisOptions is OrdinaisOptions)
+                if (predefinicao.NumeraisOptions is OrdinaisOptions ordinaisOptions)
                 {
-                    var ordinaisOptions = OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].NumeraisOptions as OrdinaisOptions;
-
-                    cbo_Tipo.SelectedIndex = 1;
+                    cbo_Tipo.SelectedItem = TipoNumerais.Ordinais;
                     chk_ExtensoEmFeminino.Checked = ordinaisOptions.DeveUsarExtensoFeminino;
                     chk_SepararClassesPorVirgula.Checked = ordinaisOptions.SepararClassesPorVirgula;
                     txt_ParteDecimalSingular.Text = ordinaisOptions.Singular;
@@ -128,34 +124,17 @@ namespace Exemplo
                     txt_NumeroPorExtenso.Text = "NumeraisOptions não é um objeto do tipo esperado.";
                 }
             }
-            else if (OpcoesPredefinidas.Predefinicoes[tipoPredefinicao].Tipo == TipoNumerais.Romanos)
+            else if (predefinicao.Tipo == TipoNumerais.Romanos)
             {
-                cbo_Tipo.SelectedIndex = 2;
+                cbo_Tipo.SelectedItem = TipoNumerais.Romanos;
             }
-        }
-
-        private static Predefinicoes ObtemTipoPreset(int cboIndex)
-        {
-            return cboIndex switch
-            {
-                1 => Predefinicoes.Cardinais,
-                2 => Predefinicoes.Ordinais,
-                3 => Predefinicoes.Romanos,
-                4 => Predefinicoes.MonetarioBRL,
-                5 => Predefinicoes.Porcentagem,
-                6 => Predefinicoes.Metros,
-                _ => Predefinicoes.Nenhum
-            };
         }
 
         private void CboTipos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ObtemTipoNumeral();
-        }
+            var tipo = cbo_Tipo.SelectedItem is TipoNumerais selecionado ? selecionado : TipoNumerais.Cardinais;
 
-        private TipoNumerais ObtemTipoNumeral()
-        {
-            if (cbo_Tipo.SelectedIndex == 0)
+            if (tipo == TipoNumerais.Cardinais)
             {
                 chk_ExtensoEmFeminino.Enabled = true;
                 chk_SepararClassesPorVirgula.Enabled = true;
@@ -169,9 +148,8 @@ namespace Exemplo
                 txt_ParteInteiraPlural.Enabled = true;
                 txt_ParteDecimalSingular.Enabled = true;
                 txt_ParteDecimalPlural.Enabled = true;
-                return TipoNumerais.Cardinais;
             }
-            else if (cbo_Tipo.SelectedIndex == 1)
+            else if (tipo == TipoNumerais.Ordinais)
             {
                 chk_ExtensoEmFeminino.Enabled = true;
                 chk_SepararClassesPorVirgula.Enabled = true;
@@ -185,7 +163,6 @@ namespace Exemplo
                 txt_ParteInteiraPlural.Enabled = false;
                 txt_ParteDecimalSingular.Enabled = true;
                 txt_ParteDecimalPlural.Enabled = false;
-                return TipoNumerais.Ordinais;
             }
             else
             {
@@ -201,7 +178,6 @@ namespace Exemplo
                 txt_ParteInteiraPlural.Enabled = false;
                 txt_ParteDecimalSingular.Enabled = false;
                 txt_ParteDecimalPlural.Enabled = false;
-                return TipoNumerais.Romanos;
             }
         }
     }

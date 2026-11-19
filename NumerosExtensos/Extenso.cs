@@ -16,6 +16,9 @@ namespace NumerosExtensos
         /// <param name="extenso">Opções predefinidas que devem ser passadas para retornar o tipo de numeral que deverá ser escrito.</param>
         public Escrita Escrever(ExtensoOptions extenso)
         {
+            if (extenso == null)
+                throw new ArgumentNullException(nameof(extenso));
+
             switch (extenso.Tipo)
             {
                 case TipoNumerais.Cardinais:

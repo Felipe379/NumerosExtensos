@@ -1,0 +1,23 @@
+root = true
+
+[*]
+end_of_line = crlf
+
+[*.{cs,csproj,sln,resx}]
+charset = utf-8-bom
+
+[*.{cs,csproj,resx}]
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+[*.{csproj,resx}]
+indent_size = 2
+
+[*.Designer.cs]
+trim_trailing_whitespace = false
+
+[*.md]
+charset = utf-8
+trim_trailing_whitespace = false
+insert_final_newline = true

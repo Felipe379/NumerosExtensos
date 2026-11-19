@@ -1,18 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Authors>Felipe de Camargo</Authors>
     <Description>Pacote que permite escrever os numerais da língua portuguesa (PT-BR) por extenso.</Description>
     <PackageId>NumerosExtensos</PackageId>
-    <Copyright>Copyright © 2020 Felipe de Camargo</Copyright>
+    <Copyright>Copyright © 2020-2026 Felipe de Camargo</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/Felipe379/NumerosExtensos/</RepositoryUrl>
-    <Version>2.1.1</Version>
+    <Version>2.2.0</Version>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageTags>Números;Número;Extensos;Extenso;Escrita;Escrever;</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <RepositoryType></RepositoryType>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,12 +2,9 @@
 
 namespace NumerosExtensos.Tipos.Cardinal
 {
-    internal class Nomenclatura
+    internal static class Nomenclatura
     {
-        internal Nomenclatura(bool deveUsarExtensoFeminino)
-        {
-            Numeros = deveUsarExtensoFeminino ? NumerosFeminino : NumerosMasculino;
-        }
+        internal static Dictionary<int, string> ObterNumeros(bool feminino) => feminino ? NumerosFeminino : NumerosMasculino;
 
         private static readonly Dictionary<int, string> NumerosMasculino = new Dictionary<int, string>()
         {
@@ -95,9 +92,7 @@ namespace NumerosExtensos.Tipos.Cardinal
             { 900, "Novecentas" }
         };
 
-        internal readonly Dictionary<int, string> Numeros = new Dictionary<int, string>() { };
-
-        internal readonly Dictionary<int, string> Classes = new Dictionary<int, string>()
+        internal static readonly Dictionary<int, string> Classes = new Dictionary<int, string>()
         {
             { 0, "" },
             { 1, "Mil" },

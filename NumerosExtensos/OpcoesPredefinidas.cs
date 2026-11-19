@@ -5,9 +5,17 @@ using System.Collections.Generic;
 
 namespace NumerosExtensos
 {
+    /// <summary>
+    /// Classe com as opções predefinidas para os tipos de numerais mais comuns.
+    /// </summary>
     public class OpcoesPredefinidas
     {
-        public static readonly Dictionary<Predefinicoes, ExtensoOptions> Predefinicoes = new Dictionary<Predefinicoes, ExtensoOptions>
+        /// <summary>
+        /// Opções predefinidas. Cada acesso retorna novas instâncias, então alterá-las não afeta outros consumidores.
+        /// </summary>
+        public static Dictionary<Predefinicoes, ExtensoOptions> Predefinicoes => CriaPredefinicoes();
+
+        private static Dictionary<Predefinicoes, ExtensoOptions> CriaPredefinicoes() => new Dictionary<Predefinicoes, ExtensoOptions>
         {
             { Enums.Predefinicoes.Nenhum, new ExtensoOptions
                 {

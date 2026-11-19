@@ -5,6 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace NumerosExtensos.Tipos.Cardinal
 {
+    /// <summary>
+    /// Escrita dos números cardinais por extenso.
+    /// </summary>
     public class Escrever : Escrita
     {
         private static readonly Regex _pattern = new Regex(@"
@@ -16,18 +19,25 @@ namespace NumerosExtensos.Tipos.Cardinal
             $                                        # Fim
         ", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
 
+        /// <summary>
+        /// Opções utilizadas na escrita dos números cardinais.
+        /// </summary>
         public CardinaisOptions CardinaisOptions { get; set; }
-        private Nomenclatura Nomenclatura { get; set; }
 
+        /// <summary>
+        /// Instancia a escrita dos números cardinais.
+        /// </summary>
+        /// <param name="extensoOptions">Opções do tipo <see cref="Options.Numerais.CardinaisOptions"/>.</param>
+        /// <exception cref="InvalidOperationException">Quando as opções não forem do tipo <see cref="Options.Numerais.CardinaisOptions"/>.</exception>
         public Escrever(NumeraisOptions extensoOptions)
         {
             if (!(extensoOptions is CardinaisOptions cardinaisOpts))
-                throw new InvalidOperationException();
+                throw new InvalidOperationException($"Para o tipo de numeral Cardinais, a propriedade 'NumeraisOptions' deve ser do tipo '{nameof(CardinaisOptions)}'");
 
             CardinaisOptions = cardinaisOpts;
-            Nomenclatura = new Nomenclatura(CardinaisOptions.DeveUsarExtensoFeminino);
         }
 
+        /// <inheritdoc/>
         public override string Numero(string numero)
         {
             var regex = _pattern.Match(numero);
@@ -41,6 +51,9 @@ namespace NumerosExtensos.Tipos.Cardinal
             var numeroParteDecimal = regex.Groups["numeroParteDecimal"].ToString();
 
             if (string.IsNullOrWhiteSpace(virgula) && !string.IsNullOrWhiteSpace(numeroParteDecimal))
+                throw new FormatException();
+
+            if (string.IsNullOrWhiteSpace(numeroParteInteira) && string.IsNullOrWhiteSpace(numeroParteDecimal))
                 throw new FormatException();
 
             var numeroEscrito = string.IsNullOrWhiteSpace(sinal) ? string.Empty : sinal == "-" ? " Menos " : " Mais ";
@@ -125,7 +138,8 @@ namespace NumerosExtensos.Tipos.Cardinal
                     else if (CardinaisOptions.SepararClassesPorVirgula && quantidadeDeCasas != i + 1)
                         numeroEscrito += ", ";
 
-                    numeroEscrito += (valor == 1 && i == 1 && !CardinaisOptions.UmMilExplicito) ? string.Empty : EscrevePorExtenso(valor);
+                    // Milhão, bilhão etc. são substantivos masculinos, então a partir da classe 2 o número é sempre masculino.
+                    numeroEscrito += (valor == 1 && i == 1 && !CardinaisOptions.UmMilExplicito) ? string.Empty : EscrevePorExtenso(valor, forcarMasculino: i >= 2);
                     numeroEscrito += i < 2 ? $" {Nomenclatura.Classes[i]}" : valor == 1 ? $" {Nomenclatura.Classes[i]}ão" : $" {Nomenclatura.Classes[i]}ões";
                 }
             }
@@ -138,8 +152,9 @@ namespace NumerosExtensos.Tipos.Cardinal
             return numeroEscrito;
         }
 
-        private string EscrevePorExtenso(int valor)
+        private string EscrevePorExtenso(int valor, bool forcarMasculino = false)
         {
+            var numeros = Nomenclatura.ObterNumeros(CardinaisOptions.DeveUsarExtensoFeminino && !forcarMasculino);
             var unidadePorExtenso = string.Empty;
             var ordensNumericas = Helpers.ObterOrdemNumerica(valor);
             var valorUnidade = ordensNumericas[0];
@@ -149,22 +164,22 @@ namespace NumerosExtensos.Tipos.Cardinal
             if (valorCentena > 0)
             {
                 if (valorCentena == valor)
-                    return valorCentena == 100 ? $" {Nomenclatura.Numeros[valorCentena * -1]}" : $" {Nomenclatura.Numeros[valorCentena]}";
+                    return valorCentena == 100 ? $" {numeros[valorCentena * -1]}" : $" {numeros[valorCentena]}";
                 else
-                    unidadePorExtenso += $" {Nomenclatura.Numeros[valorCentena]} E ";
+                    unidadePorExtenso += $" {numeros[valorCentena]} E ";
             }
 
             if (valorDezena > 0)
             {
                 if (valorDezena == valorDezena + valorUnidade)
-                    return unidadePorExtenso += $" {Nomenclatura.Numeros[valorDezena]}";
+                    return unidadePorExtenso += $" {numeros[valorDezena]}";
                 else if (valorDezena == 10)
-                    return unidadePorExtenso += $" {Nomenclatura.Numeros[valorDezena + valorUnidade]}";
+                    return unidadePorExtenso += $" {numeros[valorDezena + valorUnidade]}";
                 else if (valorDezena != 0)
-                    unidadePorExtenso += $" {Nomenclatura.Numeros[valorDezena]} E ";
+                    unidadePorExtenso += $" {numeros[valorDezena]} E ";
             }
 
-            unidadePorExtenso += $" {Nomenclatura.Numeros[valorUnidade]}";
+            unidadePorExtenso += $" {numeros[valorUnidade]}";
 
             return unidadePorExtenso;
         }

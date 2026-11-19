@@ -1,0 +1,9 @@
+* text=auto eol=crlf
+
+*.cs diff=csharp
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.dll binary
+*.exe binary

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NumerosExtensos.Utils;
+using System;
 using System.Globalization;
 using System.Linq;
 
@@ -9,6 +10,8 @@ namespace NumerosExtensos.Tipos
     /// </summary>
     public abstract class Escrita
     {
+        internal const int QuantidadeMaximaDigitos = 66;
+
         /// <summary>
         /// Método que retorna o número escrito por extenso.
         /// </summary>
@@ -19,20 +22,20 @@ namespace NumerosExtensos.Tipos
         /// Método que retorna o número escrito por extenso.
         /// </summary>
         /// <param name="value">Valor do número. Tipos válidos incluem: byte, sbyte, short, ushort, int, uint, long, ulong, decimal, double, float.</param>
-        /// <param name="precisaoDecimal">Precisão de números decimais, aceitando valores entre 0 e 99 e podendo ser nula caso não tenha uma precisão definida.</param>
-        /// <param name="zerosEsquerda">Quantidade mínima de zeros à esquerda, aceitando valores entre 0 e 99.</param>
+        /// <param name="precisaoDecimal">Precisão de números decimais, aceitando valores entre 0 e 66 e podendo ser nula caso não tenha uma precisão definida.</param>
+        /// <param name="zerosEsquerda">Tamanho mínimo da parte inteira, completada com zeros à esquerda, aceitando valores entre 0 e 66. Com 0, o zero da parte inteira é omitido quando há parte decimal (ex.: 0.5 -> ,5).</param>
         public string Numero(object value, ushort? precisaoDecimal = null, ushort zerosEsquerda = 1)
         {
-            if (precisaoDecimal >= 100)
-                throw new ArgumentOutOfRangeException(nameof(precisaoDecimal), "O parâmetro 'precisaoDecimal' não pode ser maior ou igual a 100");
+            if (precisaoDecimal > QuantidadeMaximaDigitos)
+                throw new ArgumentOutOfRangeException(nameof(precisaoDecimal), $"O parâmetro 'precisaoDecimal' não pode ser maior que {QuantidadeMaximaDigitos}");
 
-            if (zerosEsquerda >= 100)
-                throw new ArgumentOutOfRangeException(nameof(zerosEsquerda), "O parâmetro 'zerosEsquerda' não pode ser maior ou igual a 100");
-
-            var numero = string.Empty;
+            if (zerosEsquerda > QuantidadeMaximaDigitos)
+                throw new ArgumentOutOfRangeException(nameof(zerosEsquerda), $"O parâmetro 'zerosEsquerda' não pode ser maior que {QuantidadeMaximaDigitos}");
 
             if (value == null)
-                return numero;
+                throw new ArgumentNullException(nameof(value));
+
+            string numero;
 
             var typeCode = Type.GetTypeCode(value.GetType());
             var precisaoFormatacao = precisaoDecimal.HasValue ? $"F{precisaoDecimal}" : string.Empty;
@@ -66,10 +69,12 @@ namespace NumerosExtensos.Tipos
                     numero = ((decimal)value).ToString(precisaoFormatacao, CultureInfo.InvariantCulture);
                     break;
                 case TypeCode.Double:
-                    numero = ((double)value).ToString(precisaoFormatacao, CultureInfo.InvariantCulture);
+                    // Convertido para decimal pois o ToString de double e float pode gerar notação científica (ex.: 1E+20).
+                    // O formato "R" preserva todos os dígitos significativos, ao contrário do Convert.ToDecimal.
+                    numero = ConverteParaDecimal(((double)value).ToString("R", CultureInfo.InvariantCulture)).ToString(precisaoFormatacao, CultureInfo.InvariantCulture);
                     break;
                 case TypeCode.Single:
-                    numero = ((float)value).ToString(precisaoFormatacao, CultureInfo.InvariantCulture);
+                    numero = ConverteParaDecimal(((float)value).ToString("R", CultureInfo.InvariantCulture)).ToString(precisaoFormatacao, CultureInfo.InvariantCulture);
                     break;
                 default:
                     throw new InvalidCastException("Tipo de objeto 'value' inválido");
@@ -80,12 +85,18 @@ namespace NumerosExtensos.Tipos
 
             if (numeros[0].StartsWith("-"))
             {
-                sinal = numeros[0].Substring(0, 1);
                 numeros[0] = numeros[0].Substring(1);
+
+                // Evita "Menos Zero" quando um valor negativo é arredondado para zero (ex.: -0.001 com precisão 2).
+                var valorEhZero = numeros.All(Helpers.NumeroApenasZeros);
+
+                if (!valorEhZero)
+                    sinal = "-";
             }
 
+            var temParteDecimal = numeros.Length > 1;
 
-            if (zerosEsquerda == 0 && numeros.First() == "0")
+            if (zerosEsquerda == 0 && temParteDecimal && numeros[0] == "0")
             {
                 numeros[0] = string.Empty;
             }
@@ -99,6 +110,18 @@ namespace NumerosExtensos.Tipos
             var numeroEscrito = Numero(numeroFormatado);
 
             return numeroEscrito;
+        }
+
+        private static decimal ConverteParaDecimal(string valor)
+        {
+            try
+            {
+                return decimal.Parse(valor, NumberStyles.Float, CultureInfo.InvariantCulture);
+            }
+            catch (Exception ex) when (ex is OverflowException || ex is FormatException)
+            {
+                throw new ArgumentOutOfRangeException("value", "O valor está fora do intervalo suportado para os tipos double e float (±7,9 × 10^28, sem NaN ou infinito)");
+            }
         }
     }
 }
